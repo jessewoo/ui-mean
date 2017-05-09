@@ -23,6 +23,45 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+router.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile',
+    failureRedirect: '/signup',
+    failureFlash: true,
+}));
+
+router.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true,
+}));
+
+
+// Facebook routes
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+
+router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: '/profile',
+    failureRedirect: '/',
+}));
+
+
+// Twitter routes
+router.get('/auth/twitter', passport.authenticate('twitter'));
+
+router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    successRedirect: '/profile',
+    failureRedirect: '/',
+}));
+
+// Google routes
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', passport.authenticate('google', {
+    successRedirect: '/profile',
+    failureRedirect: '/',
+}));
+
+
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
