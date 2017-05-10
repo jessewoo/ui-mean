@@ -1,0 +1,29 @@
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+  - node_modules/
+
+install:
+  stage: build
+  script:
+#    Handy for debugging
+    - whoami
+    - hostname
+    - pwd
+    - node -v
+    - npm -v
+#    Build via npm
+    - npm install
+  tags:
+    - Node
+
+unittest:
+  stage: test
+  script:
+    - npm install
+    - npm test
+  tags:
+    - Node
