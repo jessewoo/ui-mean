@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="app/install+run" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$">
+    <envs>
+      <env name="ENV" value="dev" />
+      <env name="DEBUG" value="express-authentication:*" />
+    </envs>
+    <browser start="true" url="http://localhost:3000/" />
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
+      <browser start="true" url="http://localhost:3000/" />
+    </EXTENSION>
+    <method />
+  </configuration>
+</component>
