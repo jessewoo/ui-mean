@@ -8,4 +8,4 @@ function test {
     cd ${DIR};
 }
 
-test "login";
+test "converter";
