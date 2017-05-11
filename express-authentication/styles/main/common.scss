@@ -1,0 +1,62 @@
+// Utilities
+@import "color-definition";
+
+.btn-primary {
+    background-color: $primary_color;
+    border-color: $primary_color_darker;
+}
+
+.btn-primary:hover {
+    background-color: $primary_color_darker;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-color: $border_boundary;
+}
+
+.icon-link, .icon-link:hover,
+.icon-link:visited, .icon-link:active{
+    color: $regular_text_inverse;
+}
+
+.icon-link-black, .icon-link-black:hover,
+.icon-link-black:visited, .icon-link-black:active{
+    color: $regular_text;
+}
+
+/* Move anchors to be above content to prevent navigation clipping */
+.AnchorAbove {
+    position: relative;
+    top: -80px;
+    left: 0px;
+    height: 30px;
+    width: 0px;
+    float: left;
+    font-size: 0;
+}
+
+// Modal Window
+.modal {
+    overflow-y: auto;
+}
+.modal-open {
+    overflow: auto;
+    padding-right: 0 !important;
+}
+
+/* Section not done marker */
+.NOTDONE {
+    background-color: $not_done;
+}
+
+/* Work in progress marker */
+.WIP {
+    background-color: $work_in_progress;
+}
+
+/* Work in progress marker */
+.NEEDHELP {
+    background-color: $need_help;
+}

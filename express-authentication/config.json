@@ -1,0 +1,10 @@
+{
+  "jqueryJsUrl": "//cdn.rcsb.org/javascript/jquery/jquery-latest.min.js",
+  "bootstrapJsUrl": "//cdn.rcsb.org/javascript/bootstrap/latest/js/bootstrap.min.js",
+  "bootstrapCssUrl": "//cdn.rcsb.org/javascript/bootstrap/latest/css/bootstrap.min.css",
+  "fontawesomeCssUrl": "//cdn.rcsb.org/javascript/fontawesome/latest/css/font-awesome.min.css",
+
+  "rcsbImageUrl": "//cdn.rcsb.org/rcsb-pdb/",
+  "legacyServer": "http://www.rcsb.org/"
+
+}

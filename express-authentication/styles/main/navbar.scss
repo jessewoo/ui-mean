@@ -1,0 +1,106 @@
+// Utilities
+@import "color-definition";
+
+//@extend-elements
+%navbar_submenu {
+    background-color: $background_for_content;
+    color: $regular_text;
+    border: 0;
+}
+
+// Top Bar Navigation
+.navbar-fixed-top {
+    background-color: $primary_color;
+    border: 0;
+    .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .navbar-nav {
+        .dropdown-toggle {
+            color: $regular_text_inverse;
+            padding: 15px 10px;
+        }
+        > .open > a {
+            @extend %navbar_submenu;
+            &:hover {
+                @extend %navbar_submenu;
+            }
+            &:focus {
+                @extend %navbar_submenu;
+            }
+        }
+        > li > .dropdown-menu {
+            color: $regular_text;
+            border-top: 0;
+            h4 {
+                font-size: 16px;
+                font-weight: bold;
+                margin-left: 20px;
+            }
+            h5 {
+                font-size: 14px;
+                margin-left: 20px;
+                margin-bottom: 5px;
+                margin-top: 20px;
+                font-weight: bold;
+            }
+            .image_submenu {
+                width: 70%;
+            }
+        }
+    }
+    .navbar-header .navbar-brand {
+        color: $regular_text_inverse;
+    }
+}
+
+// Deposition Drop Down Menu with Multi Column
+#DepositDropdownNav {
+    width: 768px;
+    .dropdown-menu {
+        display: block !important;
+        position: static !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        min-width: 100px;
+        h4 {
+            color: $deposition_title;
+        }
+        li a {
+            margin-left: 5px;
+        }
+    }
+}
+
+// Toggle 3 Bar Menu for Mobile Collapsed
+.navbar-header .navbar-toggle {
+    margin-left: 15px;
+    background-color: $primary_color;
+    border-color: transparent;
+    &:hover {
+        background-color: $primary_color_darker;
+    }
+}
+
+// MyPDB Login
+.myPDBLogin_Area {
+    margin-top: 8px;
+    .dropdown-menu {
+        left: -112px;
+    }
+    #mypdb_adminMenu > li > a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: $regular_text;
+        white-space: nowrap;
+        &:hover {
+            text-decoration: none;
+            background-color: $regular_text_hover;
+        }
+    }
+}

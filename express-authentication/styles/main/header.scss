@@ -1,0 +1,127 @@
+// Utilities
+@import "color-definition";
+
+//urls
+$header_image_url: url(https://cdn.rcsb.org/rcsb-pdb/v2/common/images/HeaderImage.jpg);
+
+#header {
+    margin: 50px 0 20px 0;
+    padding: 30px 0 20px 0;
+    background: $background_for_content_darker $header_image_url no-repeat center;
+    border-bottom: 8px solid $primary_color;
+    .container {
+        position: relative;
+        .row {
+            margin-top: 10px;
+            padding-bottom: 20px;
+            #logo_container {
+                padding: 0;
+                margin-top: 10px;
+                #rcsblogo {
+                    width: 230px;
+                    float: left;
+                }
+                #tagline {
+                    float: left;
+                    width: 180px;
+                    font-size: 14px;
+                    margin: 7px 10px;
+                    line-height: 122%;
+                    color: $regular_text_lighter;
+                    display: inline-block;
+                }
+            }
+
+        }
+    }
+}
+
+#search_container {
+    padding: 0;
+    #headerQueryForm {
+        margin-top: 10px;
+        color: $regular_text;
+        input {
+            padding: 0 20px;
+            height: 50px;
+            width: 87%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        button {
+            padding: 15px;
+            background-color: $secondary_color_darker;
+            color: $regular_text_inverse;
+            font-weight: bold;
+        }
+    }
+    .quicklinks {
+        font-size: 12px;
+        margin-left: 20px;
+    }
+}
+
+
+#socialmedia_section {
+    background: $primary_color;
+    display: block;
+    color: $regular_text_inverse;
+    padding: 3px 6px;
+    width: 96px;
+    height: 26px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: absolute;
+    bottom: -32px;
+    right: 0;
+    list-style-type: none;
+    li {
+        float: left;
+        display: inline-block;
+        margin: 0 2px;
+        a {
+            display: block;
+            text-decoration: none;
+            color: $regular_text_inverse;
+            &:hover {
+                color: $regular_text_inverse;
+            }
+        }
+    }
+}
+#PDBmembers {
+    list-style-type: none;
+    padding: 3px 6px;
+    position: absolute;
+    bottom: -32px;
+    left: -5px;
+    li {
+        display: inline;
+        padding: 0;
+        margin: 0 3px 0 0;
+        #pdb101logo {
+            width: 95px;
+            margin-bottom: 3px;
+        }
+        #wwpdblogo {
+            width: 80px;
+            margin-bottom: 4px;
+        }
+        #emdatabanklogo {
+            width: 100px;
+            margin-bottom: 2px;
+        }
+        #ndblogo {
+            width: 88px;
+            margin-bottom: 2px;
+        }
+        #sbkblogo {
+            width: 82px;
+            margin-bottom: 0;
+        }
+        #wwpdbfoundationlogo {
+            width: 96px;
+            margin-bottom: 0;
+        }
+    }
+}

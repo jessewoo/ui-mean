@@ -1,0 +1,47 @@
+// Utilities
+@import "color-definition";
+
+// Auto-Suggest Box
+.querySuggest {
+    border: solid 1px $border_boundary;
+    background: $background_for_content;
+    left: 0;
+    top: 60px;
+    margin-top: 5px;
+    z-index: 100000000;
+    position: absolute;
+    width: 100%;
+    padding: 10px;
+    display: block;
+    .suggestgroup {
+        display: block;
+        float: left;
+        margin-right: 14px;
+        ul {
+            margin-bottom: 0;
+            margin-left: -20px;
+            .suggestNotFocus a {
+                color: $de-emphasize_text;
+            }
+            .querySuggestAll {
+                margin-top: 4px;
+                font-size: 80%;
+                list-style-type: none;
+                a {
+                    color: $de-emphasize_text;
+                }
+            }
+            b {
+                font-weight: bold;
+            }
+        }
+    }
+    .Close_SearchSuggestionWindow {
+        font-size: 75%;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: block;
+    }
+}
+

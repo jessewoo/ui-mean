@@ -1,0 +1,42 @@
+<nav id="nav" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation">
+	<div class="container">
+		<div id="mypdb_loginMenu" class="pull-right myPDBLogin_Area">
+			<div class="btn-group">
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myPDBLogin">MyPDB Login</button>
+				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="/signup">Need a new MyPDB account?</a></li>
+					<li><a href="/reset_password">Forgot login or password?</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<div class="modal fade" id="myPDBLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">MyPDB Login</h4>
+			</div>
+			<div class="modal-body">
+				<form action="/login" method="post">
+					<div class="form-group">
+						<label>Email</label>
+						<input type="text" class="form-control" name="email">
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" />
+					</div>
+					<button type="submit" class="btn btn-primary" value='Login' name='method'>Submit</button>
+					<a href="/auth/google" class="btn btn-danger">Sign up thru <span class="fa fa-google-plus"></span></a>
+				</form>
+				<p>Don't have an account?<a href="/signup"> Signup</a></p>
+			</div>
+		</div>
+	</div>
+</div>

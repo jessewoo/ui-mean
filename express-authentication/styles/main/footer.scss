@@ -1,0 +1,85 @@
+// Utilities
+@import "color-definition";
+
+#footer_main {
+    background: $background_for_content_darker;
+    margin-top: 15px;
+    padding: 30px 5px 5px;
+    font-size: 12px;
+    border-top: 2px solid $border_boundary;
+    ul {
+        list-style-type: none;
+        padding-left: 10px;
+        li {
+            display: inline-block;
+            padding: 0 10px;
+            &:first-child {
+                border-right: 0;
+            }
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
+    .row_header {
+        font-size: 15px;
+        font-weight: bold;
+    }
+    div {
+        img {
+            margin: 5px 0;
+        }
+        .Rutgerslogo {
+            margin-right: 15px;
+            width: 86px;
+        }
+        .UCSDlogo {
+            width: 160px;
+        }
+        .wwpdblogo {
+            width: 70px;
+            margin-left: 5px;
+        }
+        #emdatabanklogo {
+            width: 100px;
+            margin-left: 5px;
+        }
+    }
+}
+
+#footer_statistics {
+    padding: 0;
+    font-size: 14px;
+    text-align: center;
+    ul {
+        list-style-type: none;
+        padding-left: 10px;
+        margin-bottom: 0;
+        li {
+            display: inline-block;
+            padding: 0 10px;
+            font-weight: bold;
+            &:first-child {
+                border-right: 0;
+            }
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
+    .row_header {
+        font-size: 15px;
+        font-weight: bold;
+    }
+}
+
+#footer_grant {
+    background: $primary_color;
+    padding: 5px;
+    font-size: 14px;
+    color: $regular_text_inverse;
+    text-align: center;
+    a {
+        color: $link_lighter;
+    }
+}

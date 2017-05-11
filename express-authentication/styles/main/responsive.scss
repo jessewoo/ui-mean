@@ -1,0 +1,201 @@
+// Utilities
+@import "color-definition";
+
+/* --------- TABLET FORM FACTOR --------- */
+@media screen and (min-width: 768px), screen and (max-width: 991px) {
+  #header {
+    margin-top: 40px;
+  }
+  .navbar-collapse .dropdown {
+    margin-left: 0;
+  }
+  #footer_main ul li, #footer_statistics ul li {
+    border-right: 1px solid $border_boundary;
+  }
+}
+
+/* --------- MOBILE PHONE FORM FACTOR --------- */
+@media screen and (max-width: 767px) {
+  /* --------- Global --------- */
+  .container .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* --------- NAVIGATION --------- */
+  /* Navbar Collapsed */
+  .navbar-brand {
+    padding-left: 0;
+  }
+
+  .navbar-collapse {
+    max-height: 410px;
+  }
+
+  .navbar-collapse .dropdown {
+    margin-left: 10px;
+  }
+
+  .navbar-collapse .navbar-nav {
+    margin-bottom: 50px;
+  }
+
+  .navbar-collapse .navbar-nav > .open > a,
+  .navbar-collapse .navbar-nav > .open > a:hover {
+    background-color: $background_for_content;
+    display: block;
+    width: 100px;
+  }
+
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: $regular_text_hover;
+  }
+
+  .navbar-collapse .dropdown .dropdown-menu {
+    background-color: $background_for_content;
+    position: relative;
+    left: 100px;
+    top: -50px;
+    border-top-right-radius: 4px;
+  }
+
+  .dropdown-menu .col-xs-12 {
+    padding-left: 0;
+  }
+
+  .dropdown-menu .col-xs-12 h4,
+  .dropdown-menu .col-xs-12 h5 {
+    margin-left: 10px;
+  }
+
+  .navbar-nav .open .dropdown-menu > li > a {
+    padding: 0 0 0 10px;
+  }
+
+  .navbar-collapse .dropdown #DepositDropdownNav {
+    width: 60%;
+  }
+
+  .navbar-collapse .open .caret {
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px solid;
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+    width: 0;
+  }
+
+  /* --------- HEADER SECTION --------- */
+  #logo_container,
+  #search_container,
+  .navbar .container {
+    padding: 0 15px;
+  }
+
+  #header {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  #header .container .row {
+    padding-bottom: 0;
+    margin: 0 -15px;
+  }
+
+  #header .container {
+    margin-top: 15px;
+  }
+
+  #tagline, #rcsblogo {
+    float: none;
+  }
+
+  #rcsblogo {
+    width: 180px;
+    margin-top: -45px;
+  }
+
+  #tagline {
+    margin: 0 10px;
+    text-align: left;
+    font-size: 13px;
+    line-height: 100%;
+    width: 140px;
+  }
+
+  #headerQueryForm input {
+    width: 81%;
+  }
+
+  .quicklinks {
+    margin-left: 0;
+  }
+
+  /* --------- Search Query Box --------- */
+  .querySuggest {
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  .querySuggest .suggestgroup {
+    text-align: left;
+    min-height: 0px !important;
+  }
+
+  /* --------- FOOTER SECTION --------- */
+  #footer_main ul li, #footer_statistics ul li {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 2px 10px;
+    border-right: none;
+  }
+
+  #footer_main ul li:last-child {
+    margin-bottom: 10px;
+  }
+
+}
+
+@media screen and (max-width: 399px) {
+  /* --------- HEADER SECTION --------- */
+  #header {
+    margin-top: 35px;
+  }
+
+  #headerQueryForm input {
+    width: 78%;
+  }
+
+  #rcsblogo {
+    width: 170px;
+    margin-top: -50px;
+  }
+
+  #tagline {
+    font-size: 12px;
+    line-height: 100%;
+    width: 90px;
+  }
+
+  /* --------- FOOTER SECTION --------- */
+  #footer_main ul {
+    width: 100%;
+  }
+
+  #footer_main div .wwpdblogo {
+    width: 105px;
+  }
+
+  #footer_main #emdatabanklogo {
+    width: 118px;
+  }
+
+  #pdbmembers_footer {
+    display: block;
+    width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 var express = require('express');
+const fs = require('fs');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -19,8 +20,20 @@ var session = require('express-session');
 var configDB = require('./config/database.js');
 mongoose.connect(configDB.url);
 
-
 var app = express();
+
+
+// Define env - this is a node property, set on command line using NODE_ENV=[development|test|production]
+// Defaults to development if not explicitly set
+const env = app.get('env'); //
+console.log("env=" + env);
+
+// Configuration Variables
+const config = JSON.parse( fs.readFileSync( process.env.CONFIG || "./config.json" ) );
+config.environment = env;
+config.version = JSON.parse( fs.readFileSync( "./package.json" ) ).version;
+app.locals.config = config;
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
