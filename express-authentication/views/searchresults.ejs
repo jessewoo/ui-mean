@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+  <% include partials/head.ejs %>
+  <body>
+
+  <% include partials/navbar.ejs %>
+    <div class="col-sm-8 col-sm-offset-2">
+      <br/><br/><br/><br/>
+      <div class="text-center">
+        <h2>Search Results Page</h2>
+        <button id="saveQueryToSierra" class="btn-danger btn btn-sm">
+          Save Search to Sierra
+        </button>
+        <br/><br/>
+        <div id="xml_post">
+          <code><%= xml %></code>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

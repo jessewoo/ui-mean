@@ -51,6 +51,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'shhsecret' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Session Information
+console.log(passport.session());
+console.log(session);
+// https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
+
 app.use(flash());
 
 app.use('/', index);
