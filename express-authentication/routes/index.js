@@ -6,20 +6,13 @@ var router = express.Router();
 
 var session = require('express-session');
 
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
 // COULD WE ADD TO USER OBJECT
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'MyPDB Login', authenticate: req.isAuthenticated(), user: req.user });
-    console.log(session);
     console.log(req.session.id);
-    console.log(req.session.cookie);
-    console.log(req.sessionID);
-    console.log(req.session.secret);
-
-    // s:A6MxxRv9ub3J9ChOf1a_YEeRNpI6oe7ab.Ezq0sASJ4lyyfX9qgg/UeqBPkKOmLUNz/xBcsNwLT5E
 });
 
 router.get('/login', function(req, res, next) {
@@ -31,7 +24,6 @@ router.get('/searchresults', function(req, res, next) {
         authenticate: req.isAuthenticated(), user: req.user
     });
 });
-
 
 // http://stackoverflow.com/questions/33624188/node-js-express-how-to-redirect-page-after-processing-post-request
 router.post('/searchxml', function(req, res, next) {
@@ -53,11 +45,22 @@ router.get('/signup', function(req, res) {
 router.get('/profile', isLoggedIn, function(req, res) {
     console.log("Set the Cookie");
 
+    console.log(req.user._id);
 
+    var userid;
+    if (req.user.local.email) {
+        userid = req.user.local.email;
+    }
+    if (req.user.google.id) {
+        userid = req.user.google.email;
+    }
+
+    res.cookie('LoggedIn_UserId', userid, { maxAge: 900000, httpOnly: true });
     res.render('profile.ejs', { title: 'Profile Page', user: req.user });
 });
 
 router.get('/logout', function(req, res) {
+    res.clearCookie('LoggedIn_UserId');
     req.logout();
     res.redirect('/');
 });

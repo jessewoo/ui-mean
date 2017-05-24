@@ -1,16 +1,26 @@
 <nav id="nav" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation">
 	<div class="container">
+		<ul class="nav navbar-nav">
+			<li><a href="/">Index</a></li>
+			<li><a href="/searchresults">Search Results</a></li>
+			<li><a href="/profile">Profile</a></li>
+		</ul>
 		<div id="mypdb_loginMenu" class="pull-right myPDBLogin_Area">
-			<div class="btn-group">
-				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myPDBLogin">MyPDB Login</button>
-				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-					<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="/signup">Need a new MyPDB account?</a></li>
-					<li><a href="/reset_password">Forgot login or password?</a></li>
-				</ul>
-			</div>
+			<% if (user) { %>
+				<button type="button" class="btn btn-primary"><%= user._id %></button>
+				<a class="btn btn-primary" href="/logout">Log Out</a>
+			<% } else { %>
+				<div class="btn-group">
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myPDBLogin">MyPDB Login</button>
+					<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="/signup">Need a new MyPDB account?</a></li>
+						<li><a href="/reset_password">Forgot login or password?</a></li>
+					</ul>
+				</div>
+			<% } %>
 		</div>
 	</div>
 </nav>
