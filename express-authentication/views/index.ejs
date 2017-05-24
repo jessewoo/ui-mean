@@ -5,8 +5,11 @@
 
   <body>
   <% include partials/navbar.ejs %>
+
     <div class="col-sm-8 col-sm-offset-2">
       <br/><br/><br/><br/>
+      <strong>Authenticate</strong>: <%= authenticate %><br>
+      <strong>User</strong>: <%= user %><br>
       <div class="jumbotron text-center">
         <h2>MyPDB Authentication</h2>
         <p>A Simple Authentication App built using Express, NodeJS & PassportJS.</p>

@@ -15,6 +15,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var flash = require('connect-flash');
+
+// Session
 var session = require('express-session');
 
 var configDB = require('./config/database.js');
@@ -48,13 +50,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: 'shhsecret' }));
+app.use(session({ secret: 'mypdbusage' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Session Information
 console.log(passport.session());
+console.log("++++++++++++++++++++++");
 console.log(session);
+console.log("++++++++++++++++++++++");
+
+// https://stackoverflow.com/questions/36486397/passport-login-and-persisting-session
 // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
 
 app.use(flash());

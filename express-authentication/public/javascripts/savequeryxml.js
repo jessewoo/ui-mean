@@ -40,13 +40,12 @@ function fetchQueryXML_DummyData() {
                     // console.log(data);
                     if (data.message = "stored") {
                         console.warn(data.query_xml);
-                        window.location='/searchxmlpage'
+                        // window.location='/searchxmlpage'
+                        $("#xml_post").html(data.query_xml);
                     } else {
                         console.error("Error in Storage");
                     }
-
                 });
-
         }],
         error: function (err) {
             console.error(err + " - Failed to find JSON with query ID [" + QueryId + "]");

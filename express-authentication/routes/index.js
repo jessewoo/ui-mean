@@ -2,37 +2,34 @@ var express = require('express');
 var passport = require('passport');
 // var mailer = require('express-mailer');
 var bodyParser = require('body-parser');
-
 var router = express.Router();
 
-/*
-mailer.extend(app, {
-    from: 'no-reply@example.com',
-    host: 'smtp.gmail.com', // hostname
-    secureConnection: true, // use SSL
-    port: 465, // port for secure SMTP
-    transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
-    auth: {
-        user: '',
-        pass: ''
-    }
-});
-*/
+var session = require('express-session');
 
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
+// COULD WE ADD TO USER OBJECT
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'MyPDB Login' });
+    res.render('index', { title: 'MyPDB Login', authenticate: req.isAuthenticated(), user: req.user });
+    console.log(session);
+    console.log(req.session.id);
+    console.log(req.session.cookie);
+    console.log(req.sessionID);
+    console.log(req.session.secret);
+
+    // s:A6MxxRv9ub3J9ChOf1a_YEeRNpI6oe7ab.Ezq0sASJ4lyyfX9qgg/UeqBPkKOmLUNz/xBcsNwLT5E
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('login.ejs', { message: req.flash('loginMessage') });
+    res.render('login.ejs', { title: 'Login', message: req.flash('loginMessage') });
 });
 
 router.get('/searchresults', function(req, res, next) {
-    res.render('searchresults.ejs', { title: 'Search Results' , xml: req.body.xml});
+    res.render('searchresults.ejs', { title: 'Search Results' , xml: req.body.xml,
+        authenticate: req.isAuthenticated(), user: req.user
+    });
 });
 
 
@@ -40,9 +37,6 @@ router.get('/searchresults', function(req, res, next) {
 router.post('/searchxml', function(req, res, next) {
     console.log("**** Send Query XML to MONGODB table specific to User  ****");
     console.log(req.body.xml);
-
-    // console.log(res);
-    // console.log(next);
 
     // RETURN BACK TO REQUEST
     res.json({ message: 'stored', query_xml: req.body.xml });
@@ -53,11 +47,14 @@ router.get('/searchxmlpage', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res) {
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
+    res.render('signup.ejs', { title: 'Sign Up',message: req.flash('signupMessage') });
 });
 
 router.get('/profile', isLoggedIn, function(req, res) {
-    res.render('profile.ejs', { user: req.user });
+    console.log("Set the Cookie");
+
+
+    res.render('profile.ejs', { title: 'Profile Page', user: req.user });
 });
 
 router.get('/logout', function(req, res) {
