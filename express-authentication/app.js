@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var searchquery = require('./routes/searchquery');
+
 
 var port = process.env.PORT || 3000;
 
@@ -55,11 +57,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Session Information
-console.log(passport.session());
+// console.log(passport.session());
+/*
 console.log("++++++++++++++++++++++");
+console.log("Express Session");
 console.log(session);
 console.log("++++++++++++++++++++++");
-
+*/
 // https://stackoverflow.com/questions/36486397/passport-login-and-persisting-session
 // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
 
@@ -67,6 +71,7 @@ app.use(flash());
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/searchquery', searchquery);
 
 
 require('./config/passport')(passport);

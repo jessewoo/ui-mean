@@ -30,6 +30,9 @@
                 @extend %navbar_submenu;
             }
         }
+        > li > a {
+            color: $regular_text_inverse;
+        }
         > li > .dropdown-menu {
             color: $regular_text;
             border-top: 0;

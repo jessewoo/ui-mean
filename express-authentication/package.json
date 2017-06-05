@@ -8,6 +8,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
+    "assert": "^1.4.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "chai": "^3.5.0",
@@ -21,7 +22,9 @@
     "fs": "0.0.1-security",
     "md5": "^2.2.1",
     "mocha": "^3.3.0",
+    "mongodb": "^2.2.27",
     "mongoose": "^4.9.8",
+    "monk": "^5.0.2",
     "morgan": "~1.8.1",
     "node-sass": "^4.5.2",
     "passport": "^0.3.2",

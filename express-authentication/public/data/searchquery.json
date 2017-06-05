@@ -1,0 +1,21 @@
+[
+  {
+    _id: "59124c8d89f82bda3c2e98eb",
+    email: "jesse.woo@rcsb.org",
+    search_query: [
+        {
+          "user_renamed_search": "Search for HIV",
+          "email_notification" : false,
+          "next_scheduled_run": "weekly",
+          "query_xml" : "<orgPdbQuery><version>head</version><queryType>org.pdb.query.simple.AdvancedKeywordQuery</queryType><description>Text Search for: hiv</description><queryId>F627ECA4</queryId><resultCount>2364</resultCount><keywords>hiv</keywords></orgPdbQuery>"
+        },
+        {
+          "user_renamed_search": "User Query",
+          "email_notification" : true,
+          "next_scheduled_run": "weekly",
+          "query_description:" : "Text Search for: hiv",
+          "query_xml" : "<orgPdbCompositeQuery version=\"1.0\"><queryRefinement><queryRefinementLevel>0</queryRefinementLevel><orgPdbQuery><version>head</version><queryType>org.pdb.query.simple.AdvancedKeywordQuery</queryType><description>Text Search for: hiv</description><keywords>hiv</keywords></orgPdbQuery></queryRefinement><queryRefinement><queryRefinementLevel>1</queryRefinementLevel><conjunctionType>and</conjunctionType><orgPdbQuery><version>head</version><queryType>org.pdb.query.simple.StructTitleQuery</queryType><description>StructTitleQuery: struct.title.comparator=contains struct.title.value=human </description><struct.title.comparator>contains</struct.title.comparator><struct.title.value>human</struct.title.value></orgPdbQuery></queryRefinement></orgPdbCompositeQuery>"
+        }
+      ]
+  }
+]

@@ -2,14 +2,12 @@
 <html>
 
 	<% include partials/head.ejs %>
-
 	<body>
-
 		<% include partials/navbar.ejs %>
 		<div class="col-sm-8 col-sm-offset-2">
-			<div class="jumbotron text-center">
-				<h1><span class="fa fa-sign-in"></span> Login</h1>
-
+			<br/><br/><br/><br/>
+			<div class="text-center">
+				<h1>Login</h1>
 				<% if (message != null) { %>
 				<div class="alert-danger"><%= message %></div>
 				<% } %>
@@ -30,7 +28,6 @@
 			</div>
 			<hr>
 			<span class="fa fa-sign-in"> Don't have an account?<a href="/signup"> Signup</a></span>
-			<p>Or go <a href="/">home</a>.</p>
 		</div>
 	</body>
 </html>

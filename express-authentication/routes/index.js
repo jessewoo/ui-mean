@@ -11,35 +11,64 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 // COULD WE ADD TO USER OBJECT
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'MyPDB Login', authenticate: req.isAuthenticated(), user: req.user });
+    res.render('index', { title: 'MyPDB Login',
+        authenticate: req.isAuthenticated(), user: req.user
+    });
     console.log(req.session.id);
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('login.ejs', { title: 'Login', message: req.flash('loginMessage') });
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** User Login  ****");
+        res.redirect('/profile');
+    } else {
+        console.log("**** User Need to Login  ****");
+        res.render('login', { title: 'Login', message: req.flash('loginMessage'),
+            authenticate: req.isAuthenticated(), user: req.user
+        });
+    }
 });
 
 router.get('/searchresults', function(req, res, next) {
-    res.render('searchresults.ejs', { title: 'Search Results' , xml: req.body.xml,
+    res.render('searchresults', { title: 'Search Results' , xml: req.body.xml,
         authenticate: req.isAuthenticated(), user: req.user
     });
 });
 
 // http://stackoverflow.com/questions/33624188/node-js-express-how-to-redirect-page-after-processing-post-request
 router.post('/searchxml', function(req, res, next) {
-    console.log("**** Send Query XML to MONGODB table specific to User  ****");
-    console.log(req.body.xml);
+    console.log(req.isAuthenticated());
 
-    // RETURN BACK TO REQUEST
-    res.json({ message: 'stored', query_xml: req.body.xml });
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** Send Query XML to MONGODB table specific to User  ****");
+        console.log(req.body.xml);
+
+        // RETURN BACK TO REQUEST
+        res.json({ message: 'stored', query_xml: req.body.xml });
+    } else {
+        res.json({ message: 'need to login'});
+
+        // http://mherman.org/blog/2015/07/02/handling-user-authentication-with-the-mean-stack/#.WSdR7hPyvUI
+        // http://www.alanflavell.org.uk/www/post-redirect.html
+        // https://stackoverflow.com/questions/199099/how-to-manage-a-redirect-request-after-a-jquery-ajax-call
+
+        console.log("**** Send User to Profile Page ****");
+        // res.redirect('/profile');
+        // res.redirect(307, '/profile');
+        // next({ type: 'database', error: 'datacenter blew up' });
+
+        // console.log(next());
+
+        // next(res.render('profile',  { title: 'Profile', xml: req.body.xml }))
+    }
 });
 
 router.get('/searchxmlpage', function(req, res, next) {
-    res.render('searchxml.ejs', { title: 'Search XML JSON', xml: req.body.xml });
+    res.render('searchxml', { title: 'Search XML JSON', xml: req.body.xml });
 });
 
 router.get('/signup', function(req, res) {
-    res.render('signup.ejs', { title: 'Sign Up',message: req.flash('signupMessage') });
+    res.render('signup', { title: 'Sign Up',message: req.flash('signupMessage') });
 });
 
 router.get('/profile', isLoggedIn, function(req, res) {
@@ -89,6 +118,12 @@ router.get('/auth/google/callback', passport.authenticate('google', {
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/');
+}
+
+function isLoggedIn_SavedXML(req, res, next) {
     if (req.isAuthenticated())
         return next();
     res.redirect('/');

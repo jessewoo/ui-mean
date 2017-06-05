@@ -15,15 +15,12 @@ function fetchQueryXML_DummyData() {
         dataType: "json",
         contentType: "application/json",
         success: [ function (data) {
-
-            console.log(data);
-
+            // console.log(data);
             if ( ((data["Results"]) == null ) || (typeof data["Results"][0] !== 'undefined') || ((data["Results"]).length = 0 ) ) {
-                console.log("Query Results is NULL or EMPTY");
+                // console.log("Query Results is NULL or EMPTY");
             }
 
             // For Composition XML - need to escape double quotes
-
             var queryXML = data["Query XML"];
 
             // Clean up the XML data
@@ -32,18 +29,22 @@ function fetchQueryXML_DummyData() {
             queryXML = queryXML.replace(/<runtimeStart>[\s\S]*?<\/runtimeStart>/g, '');
             queryXML = queryXML.replace(/<runtimeMilliseconds>[\s\S]*?<\/runtimeMilliseconds>/g, '');
 
-            console.log(queryXML);
-            console.log("Post STRING to HTML 'searchxml'");
+            // console.log(queryXML);
+            // console.log("Post STRING to HTML 'searchxml'");
 
             $.post( "/searchxml", { xml: queryXML })
                 .done( function(data) {
                     // console.log(data);
-                    if (data.message = "stored") {
+
+                    console.log("MESSAGE: " + data.message);
+
+                    if (data.message == "stored") {
+                        console.log("SHOULD REDIRECT TO PROFILE PAGE");
                         console.warn(data.query_xml);
-                        // window.location='/searchxmlpage'
                         $("#xml_post").html(data.query_xml);
+
                     } else {
-                        console.error("Error in Storage");
+                        console.warn(data.message);
                     }
                 });
         }],
