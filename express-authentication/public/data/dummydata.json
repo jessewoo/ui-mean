@@ -1,0 +1,13 @@
+[
+  {
+    email: "jesse.woo@rcsb.org",
+    search_query: [
+        {
+          "user_renamed_search": "Search for HIV",
+          "email_notification" : false,
+          "next_scheduled_run": "weekly",
+          "query_xml" : "<orgPdbQuery><version>head</version><queryType>org.pdb.query.simple.AdvancedKeywordQuery</queryType><description>Text Search for: hiv</description><queryId>F627ECA4</queryId><resultCount>2364</resultCount><keywords>hiv</keywords></orgPdbQuery>"
+        }
+      ]
+  }
+]

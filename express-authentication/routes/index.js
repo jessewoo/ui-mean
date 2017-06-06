@@ -29,8 +29,19 @@ router.get('/login', function(req, res, next) {
     }
 });
 
+router.get('/searchform', function(req, res, next) {
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** User Login > Search Form  ****");
+        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user});
+    } else {
+        console.log("**** User Need to Login  ****");
+        res.redirect('/login');
+    }
+});
+
+
 router.get('/searchresults', function(req, res, next) {
-    res.render('searchresults', { title: 'Search Results' , xml: req.body.xml,
+    res.render('searchresults', { title: 'Search Results', xml: req.body.xml,
         authenticate: req.isAuthenticated(), user: req.user
     });
 });
