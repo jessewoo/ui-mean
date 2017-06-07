@@ -23,6 +23,11 @@ router.get('/one/:collection/:id', function (req, res) {
     returnOne(req.params.id, req.params.collection, res);
 });
 
+// Return queries based on Email
+router.get('/one/:collection/email/:email', function (req, res) {
+    returnQueries(req.params.email, req.params.collection, res);
+});
+
 // Insert (add) mongodb object
 router.post('/save/:collection', function (req, res) {
     returnCreate(req.body, req.params.collection, res);
@@ -47,6 +52,15 @@ var returnAll = function (collection, res) {
 // Helper function with async callback - for read single document
 var returnOne = function (mongo_id, collection, res) {
     database.one(mongo_id, collection, function (toSend) {
+        res.send(toSend);
+    });
+};
+
+// Helper function with async callback - for read single document
+var returnQueries = function (email, collection, res) {
+    console.log(email);
+    console.log(collection);
+    database.email(email, collection, function (toSend) {
         res.send(toSend);
     });
 };

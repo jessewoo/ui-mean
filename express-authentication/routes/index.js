@@ -32,12 +32,38 @@ router.get('/login', function(req, res, next) {
 router.get('/searchform', function(req, res, next) {
     if ((req.isAuthenticated()) == true ) {
         console.log("**** User Login > Search Form  ****");
+
         res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user});
     } else {
         console.log("**** User Need to Login  ****");
         res.redirect('/login');
     }
 });
+
+router.get('/userqueries', function(req, res, next) {
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** User Login > User Queries  ****");
+
+        // Use email to find search queries
+        var user_email = "";
+        if (req.user.local) {
+            console.log(req.user.local["email"]);
+            user_email = req.user.local["email"];
+        }
+        else if (req.user.google) {
+            console.log(req.user.google["email"]);
+            user_email = req.user.google["email"];
+        }
+
+        // console.log(user_email);
+
+        res.render('userqueries', { title: 'User Queries', message: req.flash('userQueries'), authenticate: req.isAuthenticated(), user: req.user, user_email: user_email});
+    } else {
+        console.log("**** User Need to Login  ****");
+        res.redirect('/login');
+    }
+});
+
 
 
 router.get('/searchresults', function(req, res, next) {
