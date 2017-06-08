@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <% include partials/head.ejs %>
+  <body>
+  <% include partials/navbar.ejs %>
+    <div class="col-sm-8 col-sm-offset-2">
+      <br/><br/><br/>
+      <div>
+        <h2>ALL User Queries</h2>
+        <br>
+        <pre id="user_email"><%= user_email %></pre>
+        <table id="savedAllUserQueries">
+          <thead>
+            <tr>
+              <th>MongoDB ID</th>
+              <th>Email</th>
+              <th>Next Scheduled Run</th>
+              <th>Email Notification</th>
+              <th>Query Description</th>
+              <th>Query XML</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- INSERT Table -->
+          </tbody>
+        </table>
+        <button class="btn-primary btn" id="viewAllUserQueries">View All User Queries</button>
+      </div>
+    </div>
+  </body>
+
+</html>

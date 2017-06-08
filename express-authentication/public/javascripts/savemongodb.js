@@ -50,7 +50,7 @@ $(function () {
             singleSearchQuery.query_description = $('#searchQueryTitle').val();
             singleSearchQuery.query_xml = $('#queryXML').val();
 
-            searchQueryArray.push(singleSearchQuery)
+            searchQueryArray.push(singleSearchQuery);
 
             // Check user email, if it exist in database already, update the object with new query
             // ---- OR ------
@@ -65,6 +65,10 @@ $(function () {
             console.log("Sending: " + json);
 
             // Send result to server for saving to object database
+
+
+
+            // If user email doesn't exist in database, create a new object with new query
             $.ajax({
                 type: "post",
                 url: "/searchquery/save/queries",
@@ -79,6 +83,9 @@ $(function () {
                     console.log("ERROR: Unable save the item to the database!", err);
                 }
             });
+
+
+
         } else {
             // Email should be retrieved from the PassportJS Authentication
 

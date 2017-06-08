@@ -64,6 +64,29 @@ router.get('/userqueries', function(req, res, next) {
     }
 });
 
+router.get('/alluserqueries', function(req, res, next) {
+
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** User Login > User Queries  ****");
+
+        // Use email to find search queries
+        var user_email = "";
+        if (req.user.local) {
+            console.log(req.user.local["email"]);
+            user_email = req.user.local["email"];
+        }
+        else if (req.user.google) {
+            console.log(req.user.google["email"]);
+            user_email = req.user.google["email"];
+        }
+
+        // console.log(user_email);
+        res.render('alluserqueries', { title: 'All User Queries', authenticate: req.isAuthenticated(), user: req.user, user_email: user_email});
+    } else {
+        console.log("**** User Need to Login  ****");
+        res.redirect('/login');
+    }
+});
 
 
 router.get('/searchresults', function(req, res, next) {

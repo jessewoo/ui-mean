@@ -53,7 +53,7 @@ var oneWrapper = function (mongo_id, collection, callback) {
 
 var deleteWrapper = function (target, collection, callback) {
     MongoClient.connect(url, function (err, db) {
-        //console.log("+1 DB connection");
+        console.log("+1 DB connection - DELETE");
         assert.equal(null, err);
         removeDocument(db, target.id, collection, function (result) {
             end(db);
