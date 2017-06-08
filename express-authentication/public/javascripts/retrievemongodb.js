@@ -51,10 +51,17 @@ $(function () {
         var newRow = "<tr class='center'>";
         newRow += "<td>" + object._id + "</td>";
         newRow += "<td>" + object.email + "</td>";
-        newRow += "<td>" + object.search_queries["next_scheduled_run"] + "</td>";
-        newRow += "<td>" + object.search_queries["email_notification"] + "</td>";
-        newRow += "<td>" + object.search_queries["query_description"] + "</td>";
-        newRow += "<td>" + object.search_queries["query_xml"] + "</td>";
+
+        // Go thru each object in the search queries ARRAY
+        object.search_queries.forEach( function(arrayItem) {
+            newRow += "<td>" + arrayItem["next_scheduled_run"] + "</td>";
+            newRow += "<td>" + arrayItem["email_notification"] + "</td>";
+            newRow += "<td>" + arrayItem["query_description"] + "</td>";
+
+            // http://www.rcsb.org/pdb/software/rest.do
+            newRow += "<td>" + arrayItem["query_xml"] + "</td>";
+        });
+
         newRow += action_col;
         newRow += "</tr>";
 
