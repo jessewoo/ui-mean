@@ -10,9 +10,21 @@
         <pre><%= user %></pre>
         <br>
         <pre id="user_email"><%= user_email %></pre>
-        <div id="savedUserQueries">
 
-        </div>
+        <table id="savedUserQueries" class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Next Scheduled Run</th>
+            <th>Email Notification</th>
+            <th>Query Description</th>
+            <th>Query XML</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- INSERT Table -->
+          </tbody>
+        </table>
+
         <button class="btn-primary btn" id="viewUserQueries">View User Queries</button>
       </div>
     </div>

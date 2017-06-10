@@ -12,6 +12,19 @@ $(function () {
             success: function (data) {
                 console.log("Retrieve Data from MongoDB for searchQueries table");
                 console.log(data);
+
+                // DATA - Loop thru each object
+                $.each(data[0]["search_queries"], function (index, object) {
+                    // Build HTML code for the table row
+                    var newRow = "<tr class='center'>";
+                    newRow += "<td>" + object["next_scheduled_run"] + "</td>";
+                    newRow += "<td>" + object["email_notification"] + "</td>";
+                    newRow += "<td>" + object["query_description"] + "</td>";
+                    newRow += "<td><pre>" + object["query_xml"] + "</pre></td>";
+                    newRow += "</tr>";
+
+                    $("#savedUserQueries > tbody:last-child").append(newRow);
+                });
             },
             error: function (err) {
                 console.log("ERROR: Unable to retrieve data!", err);
