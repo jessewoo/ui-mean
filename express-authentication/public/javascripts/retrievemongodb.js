@@ -16,11 +16,17 @@ $(function () {
                 // DATA - Loop thru each object
                 $.each(data[0]["search_queries"], function (index, object) {
                     // Build HTML code for the table row
+
+                    // console.log(object["query_xml"]);
+                    // var xmlText = new XMLSerializer().serializeToString(object["query_xml"]);
+
+                    // Query Description should be unique
+
                     var newRow = "<tr class='center'>";
                     newRow += "<td>" + object["next_scheduled_run"] + "</td>";
                     newRow += "<td>" + object["email_notification"] + "</td>";
                     newRow += "<td>" + object["query_description"] + "</td>";
-                    newRow += "<td><pre>" + object["query_xml"] + "</pre></td>";
+                    newRow += "<td class='query_xml'>" + object["query_xml"].toString() + "</td>";
                     newRow += "</tr>";
 
                     $("#savedUserQueries > tbody:last-child").append(newRow);
@@ -31,6 +37,9 @@ $(function () {
             }
         });
     });
+
+    // https://stackoverflow.com/questions/35050750/mongodb-creating-an-objectid-for-each-new-child-added-to-the-array-field
+    // DELETE sub object from main object
 
     // Retrieve All Queries
     $(document).on('click', '#viewAllUserQueries', function () {
@@ -72,6 +81,7 @@ $(function () {
             newRow += "<td>" + arrayItem["query_description"] + "</td>";
 
             // http://www.rcsb.org/pdb/software/rest.do
+            console.log(arrayItem["query_xml"]);
             newRow += "<td>" + arrayItem["query_xml"] + "</td>";
         });
 

@@ -45,17 +45,15 @@ router.get('/userqueries', function(req, res, next) {
         console.log("**** User Login > User Queries  ****");
 
         // Use email to find search queries
-        var user_email = "";
-        if (req.user.local) {
-            console.log(req.user.local["email"]);
+        var user_email;
+
+        if (req.user.local["email"] !== undefined ) {
             user_email = req.user.local["email"];
-        }
-        else if (req.user.google) {
-            console.log(req.user.google["email"]);
+        } else if(req.user.google["email"] !== undefined) {
             user_email = req.user.google["email"];
         }
 
-        // console.log(user_email);
+        console.log(user_email);
 
         res.render('userqueries', { title: 'User Queries', message: req.flash('userQueries'), authenticate: req.isAuthenticated(), user: req.user, user_email: user_email});
     } else {
@@ -71,16 +69,14 @@ router.get('/alluserqueries', function(req, res, next) {
 
         // Use email to find search queries
         var user_email = "";
-        if (req.user.local) {
-            console.log(req.user.local["email"]);
+        if (req.user.local["email"] !== undefined ) {
             user_email = req.user.local["email"];
-        }
-        else if (req.user.google) {
-            console.log(req.user.google["email"]);
+        } else if(req.user.google["email"] !== undefined) {
             user_email = req.user.google["email"];
         }
 
-        // console.log(user_email);
+        console.log(user_email);
+
         res.render('alluserqueries', { title: 'All User Queries', authenticate: req.isAuthenticated(), user: req.user, user_email: user_email});
     } else {
         console.log("**** User Need to Login  ****");

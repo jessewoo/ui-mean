@@ -3,31 +3,31 @@
 	<% include partials/head.ejs %>
 
 	<body>
-
-	<% include partials/navbar.ejs %>
-	<div class="col-sm-8 col-sm-offset-2">
-		<br/><br/><br/><br/>
-		<div class="text-center">
-			<h2 class="fa fa-user"> Profile</h2><br>
-			<span><strong>user id</strong>: <%= user._id ? user._id : '' %></span><br>
-			<span class="fa fa-sign-out"><a href="/logout"> Sign out</a></span>
-			<hr>
-			<div class="jumbotron">
-				<% if (user.local.email != null) { %>
-					<img src="https://avatars.io/gravatar/<%= user.local.email %>/140" class="img-circle"><br>
-					<strong>email</strong>: <%= user.local.email %><br>
-				<% } %>
-
-				<% if (user.google.id != null) { %>
-					<h2 class="fa fa-google-plus"> Google</h2><br>
-					<img src="https://avatars.io/gravatar/<%= user.google.email %>/140" class="img-circle"><br>
-					<strong>id</strong>: <%= user.google.id %><br>
-					<strong>token</strong>: <%= user.google.token %><br>
-					<strong>email</strong>: <%= user.google.email %><br>
-					<strong>name</strong>: <%= user.google.name %>
-				<% } %>
+		<% include partials/navbar.ejs %>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<br/><br/><br/><br/>
+					<div>
+						<h3>User Profile</h3>
+						<span class="fa fa-sign-out pull-right"><a href="/logout"> Sign out</a></span>
+						<span><strong>user id</strong>: <%= user._id ? user._id : '' %></span>
+						<br><br>
+						<hr>
+						<% if (user.local.email != null) { %>
+							<p>Local User Email</p><br>
+							<strong>id</strong>: <%= user._id %><br>
+							<strong>email</strong>: <%= user.local.email %><br>
+						<% } %>
+						<% if (user.google.id != null) { %>
+							<p class="fa fa-google-plus"> Google</p><br>
+							<strong>id</strong>: <%= user.google.id %><br>
+							<strong>email</strong>: <%= user.google.email %><br>
+							<strong>name</strong>: <%= user.google.name %>
+						<% } %>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
 	</body>
 </html>
