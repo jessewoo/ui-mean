@@ -1,40 +1,34 @@
-use strict;
-use LWP::Simple qw( $ua );
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Page for MyPDB</title>
+        <meta name="description" content="The HTML5 Post">
+        <meta name="author" content="Jesse Woo">
+
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+        <script type="text/javascript" src="https://cdn.rcsb.org/javascript/jquery/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rcsb.org/javascript/bootstrap/latest/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="post.js"></script>
+    </head>
+    <body>
+    <br>
+        <div class="container">
+            <button type="button" class="btn btn-default" id="runQuery">Run Query by AJAX</button>
+            <hr>
+            <h4>REST POST SERVICE</h4>
+            <form method=post action="http://localhost:8080/pdb/software/webservices/rest_two.jsp">
+                <input id="xml_text_value" name="xml_text" value=""><br><br>
+                <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: hiv">
+                <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: diabetes">
+                <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: diabetes">
+            </form>
+            <hr>
 
 
-my $organism_name = 'nipah';
-my $XML_query = qq(
-<?xml version="1.0" encoding="UTF-8"?>
-<orgPdbQuery>
-    <version>B0905</version>
-    <queryType>org.pdb.query.simple.OrganismQuery</queryType>
-    <description>Organism Search : Organism Name=$organism_name </description>
-    <organismName>$organism_name</organismName>
-</orgPdbQuery>
-);
-print "\nquery:", $XML_query;
-
-# Proxy the LWP user agent
-#$ua->proxy( http => 'http://proxyout.lanl.gov:8080' );
-
-# Create a request
-my $request = HTTP::Request->new( POST => 'http://www.rcsb.org/pdb/rest/search/');
-
-
-$request->content_type( 'application/x-www-form-urlencoded' );
-$request->content( $XML_query );
-
-# Post the XML query
-print "\n querying PDB...";
-print "\n";
-print $XML_query;
-my $response = $ua->request( $request );
-
-# Check to see if there is an error
-unless( $response->is_success ) {
-print "\n an error occurred: ", $response->status_line, "\n";
-}
-
-# Print response content in either case
-
-print "\n response content:\n", $response->content;
+        </div>
+    </body>
+</html>
