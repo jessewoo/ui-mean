@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Search Results on Classic RCSB</title>
+        <meta name="description" content="The HTML5 Search Results">
+        <meta name="author" content="Jesse Woo">
+
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+        <script type="text/javascript" src="https://cdn.rcsb.org/javascript/jquery/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rcsb.org/javascript/bootstrap/latest/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="searchresults.js"></script>
+    </head>
+    <body>
+        <br>
+        <div class="container">
+            <h3>Search Results</h3>
+            <form method=post action="">
+                <div class="form-group">
+                    <label for="xml_text_search_results">XML Text (HIDDEN)</label>
+                    <textarea class="form-control hide" rows="5" id="xml_text_search_results" name="xml_text_search_results"></textarea>
+                </div><br><hr>
+                <input class="btn btn-primary" id="saveQueryToSierra" type="submit" value="Save Query to Sierra">
+            </form>
+        </div>
+    </body>
+</html>

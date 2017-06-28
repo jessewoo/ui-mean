@@ -15,20 +15,18 @@
         <script type="text/javascript" src="post.js"></script>
     </head>
     <body>
-    <br>
+        <br>
         <div class="container">
-            <button type="button" class="btn btn-default" id="runQuery">Run Query by AJAX</button>
-            <hr>
-            <h4>REST POST SERVICE</h4>
+            <h3>REST POST SERVICE</h3>
             <form method=post action="http://localhost:8080/pdb/software/webservices/rest_two.jsp">
-                <input id="xml_text_value" name="xml_text" value=""><br><br>
+                <div class="form-group">
+                    <label for="xml_text_value">XML Text (HIDDEN)</label>
+                    <textarea class="form-control hide" rows="5" id="xml_text_value" name="xml_text" placeholder="add XML text"></textarea>
+                </div><br><hr>
                 <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: hiv">
                 <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: diabetes">
-                <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: diabetes">
+                <input class="btn btn-primary submitRestButton" type="submit" value="Text Search for: virus">
             </form>
-            <hr>
-
-
         </div>
     </body>
 </html>

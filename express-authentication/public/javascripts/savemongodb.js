@@ -179,15 +179,11 @@ $(function () {
                                     console.log("ERROR: Unable remove the item from the database!", err2);
                                 }
                             });
-
                         },
                         error: function (err) {
                             console.log("ERROR: Unable save the item to the database!", err);
                         }
                     });
-
-
-
                 },
                 error: function (err) {
                     console.log("ERROR: Unable to retrieve data!", err);
