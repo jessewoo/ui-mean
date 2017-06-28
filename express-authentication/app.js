@@ -10,9 +10,6 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var searchquery = require('./routes/searchquery');
 
-
-var port = process.env.PORT || 3000;
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
@@ -52,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: 'mypdb_usage' }));
+app.use(session({ secret: 'mypdb_usage', resave:true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -100,7 +97,5 @@ app.use(function(err, req, res, next) {
         error: {},
     });
 });
-
-app.listen(port);
 
 module.exports = app;
