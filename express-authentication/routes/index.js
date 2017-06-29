@@ -22,7 +22,12 @@ router.get('/login', function(req, res, next) {
         console.log("**** User Login  ****");
         res.redirect('/profile');
     } else {
-        console.log("**** User Need to Login  ****");
+        console.log("**** User Need to Login - GET /Login  ****");
+
+        // https://www.codementor.io/tips/7514243748/how-do-i-redirect-in-expressjs-while-passing-some-context
+        // Need to remember the previous page that it was going to, once logged in, then go to next page
+        console.log(req.body);
+        console.log(req);
         res.render('login', { title: 'Login', message: req.flash('loginMessage'),
             authenticate: req.isAuthenticated(), user: req.user
         });
@@ -30,14 +35,32 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/searchform', function(req, res, next) {
-    if ((req.isAuthenticated()) == true ) {
-        console.log("**** User Login > Search Form  ****");
+    var xml = "";
 
-        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user});
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** GET: User Login > Search Form  ****");
+
+        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user, xml_text: xml});
+    } else {
+        console.log("**** User Need to Login  ****");
+        res.redirect('/login', next);
+    }
+});
+
+router.post('/searchform', function(req, res, next) {
+    console.log(req.body.xml_text_search_results);
+    var xml = req.body.xml_text_search_results;
+    console.log(xml);
+
+    if ((req.isAuthenticated()) == true ) {
+        console.log("**** POST: User Login > Search Form  ****");
+
+        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user, xml_text: xml});
     } else {
         console.log("**** User Need to Login  ****");
         res.redirect('/login');
     }
+
 });
 
 router.get('/userqueries', function(req, res, next) {
@@ -156,7 +179,11 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash: true
 }));
 
-router.post('/login', passport.authenticate('local-login', {
+router.post('/login', function(req, res) {
+
+    // If there was a previous page, if successful, it should be directed to that page
+    console.log(req);
+}, passport.authenticate('local-login', {
     successRedirect: '/profile',
     failureRedirect: '/login',
     failureFlash: true

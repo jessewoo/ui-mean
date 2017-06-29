@@ -1,3 +1,5 @@
+console.log("save Mongodb");
+
 $(function () {
     $(document).on('click', '#insertDummyData', function () {
         $.ajax({
