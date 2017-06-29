@@ -11,19 +11,25 @@
         <br>
         <pre id="user_email"><%= user_email %></pre>
 
-        <table id="savedUserQueries" class="table table-bordered">
-          <thead>
-          <tr>
-            <th>Next Scheduled Run</th>
-            <th>Email Notification</th>
-            <th>Query Description</th>
-            <th>Query XML</th>
-          </tr>
-          </thead>
-          <tbody>
-          <!-- INSERT Table -->
-          </tbody>
-        </table>
+        <form id="submitForSearchResults" method=post action="http://localhost:8080/pdb/software/webservices/rest_two.jsp">
+          <div class="form-group">
+            <input id="xml_text_value" class="form-control" name="xml_text" placeholder="This XML Will be Used to Retrieve Search Results">
+          </div>
+          <table id="savedUserQueries" class="table table-bordered">
+            <thead>
+            <tr>
+              <th>Next Scheduled Run</th>
+              <th>Email Notification</th>
+              <th>Query Description</th>
+              <th>Query XML</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- INSERT Table -->
+            </tbody>
+          </table>
+
+        </form>
 
         <button class="btn-primary btn" id="viewUserQueries">View User Queries</button>
       </div>

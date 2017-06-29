@@ -1,4 +1,15 @@
 $(function () {
+    $(document).on('click', '.submitRestButton', function ( event ) {
+
+        event.preventDefault();
+        var xmlText = $(this).attr("alt");
+        console.log(xmlText);
+
+        $("#xml_text_value").val(xmlText);
+
+        $('#submitForSearchResults').submit();
+    });
+
     $(document).on('click', '#viewUserQueries', function () {
 
         var user_email = $('#user_email').html();
@@ -26,7 +37,7 @@ $(function () {
                     newRow += "<td>" + object["next_scheduled_run"] + "</td>";
                     newRow += "<td>" + object["email_notification"] + "</td>";
                     newRow += "<td>" + object["query_description"] + "</td>";
-                    newRow += "<td class='query_xml'>" + object["query_xml"].toString() + "</td>";
+                    newRow += "<td><input class='btn btn-primary submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'></td>";
                     newRow += "</tr>";
 
                     $("#savedUserQueries > tbody:last-child").append(newRow);

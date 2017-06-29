@@ -37,25 +37,52 @@ router.get('/login', function(req, res, next) {
 router.get('/searchform', function(req, res, next) {
     var xml = "";
 
+    // Use email to find search queries
+    var user_email = "";
+    if (req.user) {
+        if (req.user.local["email"] !== undefined ) {
+            user_email = req.user.local["email"];
+        } else if(req.user.google["email"] !== undefined) {
+            user_email = req.user.google["email"];
+        }
+        console.log(user_email);
+    } else {
+        console.log("no user");
+    }
+
     if ((req.isAuthenticated()) == true ) {
         console.log("**** GET: User Login > Search Form  ****");
 
-        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user, xml_text: xml});
+        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user, xml_text: xml, user_email: user_email});
     } else {
         console.log("**** User Need to Login  ****");
-        res.redirect('/login', next);
+        res.redirect('/login');
     }
 });
 
 router.post('/searchform', function(req, res, next) {
+
+    // console.log(req);
+
     console.log(req.body.xml_text_search_results);
     var xml = req.body.xml_text_search_results;
-    console.log(xml);
+    // console.log(xml);
+    // var xml = "Going from Search Results Page - TESTING";
+
+    // Use email to find search queries
+    var user_email = "";
+
+    if (req.user.local["email"] !== undefined ) {
+        user_email = req.user.local["email"];
+    } else if(req.user.google["email"] !== undefined) {
+        user_email = req.user.google["email"];
+    }
+    console.log(user_email);
+
 
     if ((req.isAuthenticated()) == true ) {
         console.log("**** POST: User Login > Search Form  ****");
-
-        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user, xml_text: xml});
+        res.render('searchform', { title: 'Search Form', message: req.flash('loginMessage'), authenticate: req.isAuthenticated(), user: req.user, xml_text: xml, user_email: user_email});
     } else {
         console.log("**** User Need to Login  ****");
         res.redirect('/login');
@@ -179,11 +206,7 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash: true
 }));
 
-router.post('/login', function(req, res) {
-
-    // If there was a previous page, if successful, it should be directed to that page
-    console.log(req);
-}, passport.authenticate('local-login', {
+router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/profile',
     failureRedirect: '/login',
     failureFlash: true
