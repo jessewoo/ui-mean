@@ -14,8 +14,41 @@ $(document).on('click', '.submitRestButton', function ( event ) {
     $('#submitForSearchResults').submit();
 });
 
-$(document).on('click', '#viewUserQueries', function () {
+$(document).on('click', '.deleteUserOneQuery', function ( event ) {
 
+    // $(this).parents().eq(1).remove();
+
+    event.preventDefault();
+    $(this).parents().eq(1).remove();
+
+    console.log("Table Rows Remaining: " + $("#savedUserQueries tbody tr").length);
+
+    var mongoId = $("#mongoIdForCollection").html();
+    updateUserQueries(mongoId);
+
+});
+
+// Take the Table, update the search query array
+var updateUserQueries = function (old_mongodb_id) {
+
+    console.log(old_mongodb_id);
+
+    var updatedUserQueriesArray = new Array();
+
+    $('#savedUserQueries tbody tr').each(function(){
+        var oneQuery = new Object();
+        oneQuery.next_scheduled_run = $(this).find('.scheduledRunCell select :selected').text();
+        oneQuery.email_notification = $(this).find('.emailNotifyCell select :selected').text();
+        oneQuery.query_description = $(this).find('.queryDescription').html();
+        oneQuery.query_xml = $(this).find('td .submitRestButton').attr("alt");
+        updatedUserQueriesArray.push(oneQuery);
+    });
+
+    console.log(updatedUserQueriesArray);
+};
+
+
+$(document).on('click', '#viewUserQueries', function () {
     var user_email = $('#user_email').html();
     console.log(user_email);
 
@@ -28,22 +61,16 @@ $(document).on('click', '#viewUserQueries', function () {
             console.log("Retrieve Data from MongoDB for searchQueries table");
             console.log(data);
 
+            $("#mongoIdForCollection").html(data[0]["_id"]);
+
             // DATA - Loop thru each object
             $.each(data[0]["search_queries"], function (index, object) {
                 // Build HTML code for the table row
-
-                // console.log(object["query_xml"]);
-                // var xmlText = new XMLSerializer().serializeToString(object["query_xml"]);
-
-                // Query Description should be unique
-
-                // Dropdown
-
-                var newRow = "<tr class='center'>";
-                newRow += "<td>" + selectDropdownWorker(["monthly","weekly","none"],object["next_scheduled_run"]) + "</td>";
-                newRow += "<td>" + selectDropdownWorker(["true","false"],object["email_notification"]) + "</td>";
-                newRow += "<td>" + object["query_description"] + "</td>";
-                newRow += "<td><input class='btn btn-primary submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'></td>";
+                var newRow = "<tr>";
+                newRow += "<td class='scheduledRunCell'>" + selectDropdownWorker(["monthly","weekly","none"],object["next_scheduled_run"]) + "</td>";
+                newRow += "<td class='emailNotifyCell'>" + selectDropdownWorker(["true","false"],object["email_notification"]) + "</td>";
+                newRow += "<td class='queryDescription'>" + object["query_description"] + "</td>";
+                newRow += "<td><input class='btn btn-primary btn-sm submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'><button class='btn btn-danger btn-sm deleteUserOneQuery' type='submit'><span class='glyphicon glyphicon-trash'></span></button></td>";
                 newRow += "</tr>";
 
                 $("#savedUserQueries > tbody:last-child").append(newRow);

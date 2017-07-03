@@ -28,6 +28,11 @@ router.get('/one/:collection/email/:email', function (req, res) {
     returnQueries(req.params.email, req.params.collection, res);
 });
 
+// Put Function - Update
+router.put('/one/:collection/update/:id', function (req, res) {
+    updateQueries(req.params.id, req.params.collection, req.body, res);
+});
+
 // Insert (add) mongodb object
 router.post('/save/:collection', function (req, res) {
     returnCreate(req.body, req.params.collection, res);
@@ -61,6 +66,16 @@ var returnQueries = function (email, collection, res) {
     console.log(email);
     console.log(collection);
     database.email(email, collection, function (toSend) {
+        res.send(toSend);
+    });
+};
+
+// Put Function
+var updateQueries = function (mongo_id, collection, toLoad, res) {
+    console.log(mongo_id);
+    console.log(collection);
+    console.log(toLoad);
+    database.update(toLoad, mongo_id, collection, function (toSend) {
         res.send(toSend);
     });
 };

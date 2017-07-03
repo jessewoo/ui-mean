@@ -19,6 +19,10 @@ exports.email = function (email, collection, callback) {
     readQueriesWrapper(email, collection, callback);
 };
 
+exports.update = function (object, mongo_id, collection, callback) {
+    updateQueriesWrapper(object, mongo_id, collection, callback);
+};
+
 exports.get = function (object, callback) {
     readWrapper(object, callback);
 };
@@ -81,6 +85,19 @@ var readQueriesWrapper = function (email, collection, callback) {
         console.log("++++++++++++ READ QUERIES WRAPPER: +1 DB connection ++++++++++++++");
         assert.equal(null, err);
         findDocumentsByEmail(db, email, collection, function (result) {
+            end(db);
+            callback(result);
+        });
+
+    });
+};
+
+
+var updateQueriesWrapper = function (object, mongo_id, collection, callback) {
+    MongoClient.connect(url, function (err, db) {
+        console.log("++++++++++++ UPDATE QUERIES WRAPPER: +1 DB connection ++++++++++++++");
+        assert.equal(null, err);
+        updateDocumentsByMongoId(db, object, mongo_id, collection, function (result) {
             end(db);
             callback(result);
         });
@@ -167,6 +184,34 @@ var findDocumentsByEmail = function (db, email, collection, callback) {
         callback(docArray);
     });
 };
+
+
+// Update one motm_articles (by mongo db id)
+var updateDocumentsByMongoId = function (db, object, id, collection, callback) {
+    console.log("Update document in the database ->", id);
+    console.log("Database ->", db);
+    console.log("Collecton ->", collection);
+    console.log("Object ->", object);
+    console.log("Callback ->", callback);
+
+    var my_collection = db.collection(collection);
+    // Verify passed mongo db id is valid hex
+    var pattern = /^[0-9A-F]{24}$/i;
+    var check = pattern.test(id);
+    if (check) {
+        console.log("This is valid hex [", id, "]");
+        my_collection.find({_id: new mdb.ObjectID(id)}).toArray(function (err, docArray) {
+            assert.equal(err, null);
+            console.log("docArray", docArray);
+            callback(docArray[0])
+        });
+    } else {
+        console.log("INVALID HEX!!! [", id, "]");
+        callback(undefined);
+    }
+};
+
+
 
 // Remove
 var removeDocument = function (db, target, collection, callback) {
