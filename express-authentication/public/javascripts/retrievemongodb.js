@@ -31,9 +31,12 @@ $(document).on('click', '.deleteUserOneQuery', function ( event ) {
 // Take the Table, update the search query array
 var updateUserQueries = function (old_mongodb_id) {
 
+
+    var user_email = $('#user_email').html();
     console.log(old_mongodb_id);
 
-    var updatedUserQueriesArray = new Array();
+    var finalObject = new Object();
+    var updatedUserQueriesArray = [];
 
     $('#savedUserQueries tbody tr').each(function(){
         var oneQuery = new Object();
@@ -44,7 +47,25 @@ var updateUserQueries = function (old_mongodb_id) {
         updatedUserQueriesArray.push(oneQuery);
     });
 
-    console.log(updatedUserQueriesArray);
+    finalObject.email = user_email;
+
+    finalObject.search_queries = JSON.stringify(updatedUserQueriesArray);
+    console.log(finalObject);
+
+    $.ajax({
+        type: "POST",
+        url: "/searchquery/one/queries/update/" + old_mongodb_id,
+        data: finalObject,
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            console.log("Item updated to database!");
+        },
+        error: function (err) {
+            console.log("ERROR: Unable save the item to the database!", err);
+        }
+    });
+
 };
 
 

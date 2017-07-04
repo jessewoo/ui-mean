@@ -20,6 +20,7 @@ exports.email = function (email, collection, callback) {
 };
 
 exports.update = function (object, mongo_id, collection, callback) {
+    console.log(object);
     updateQueriesWrapper(object, mongo_id, collection, callback);
 };
 
@@ -96,6 +97,7 @@ var readQueriesWrapper = function (email, collection, callback) {
 var updateQueriesWrapper = function (object, mongo_id, collection, callback) {
     MongoClient.connect(url, function (err, db) {
         console.log("++++++++++++ UPDATE QUERIES WRAPPER: +1 DB connection ++++++++++++++");
+        console.log(object);
         assert.equal(null, err);
         updateDocumentsByMongoId(db, object, mongo_id, collection, function (result) {
             end(db);
@@ -189,8 +191,8 @@ var findDocumentsByEmail = function (db, email, collection, callback) {
 // Update one motm_articles (by mongo db id)
 var updateDocumentsByMongoId = function (db, object, id, collection, callback) {
     console.log("Update document in the database ->", id);
-    console.log("Database ->", db);
-    console.log("Collecton ->", collection);
+    // console.log("Database ->", db);
+    console.log("Collection ->", collection);
     console.log("Object ->", object);
     console.log("Callback ->", callback);
 
@@ -200,18 +202,16 @@ var updateDocumentsByMongoId = function (db, object, id, collection, callback) {
     var check = pattern.test(id);
     if (check) {
         console.log("This is valid hex [", id, "]");
-        my_collection.find({_id: new mdb.ObjectID(id)}).toArray(function (err, docArray) {
+        my_collection.update({ '_id': new mdb.ObjectID(id) }, { $set: { 'search_queries': object.search_queries } }, function(err) {
             assert.equal(err, null);
-            console.log("docArray", docArray);
-            callback(docArray[0])
+            callback(!err)
         });
+
     } else {
         console.log("INVALID HEX!!! [", id, "]");
         callback(undefined);
     }
 };
-
-
 
 // Remove
 var removeDocument = function (db, target, collection, callback) {
