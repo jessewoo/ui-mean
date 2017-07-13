@@ -28,6 +28,64 @@ $(document).on('click', '.deleteUserOneQuery', function ( event ) {
 
 });
 
+$(document).on('click', '.editQueryDescription', function ( event ) {
+
+    console.log("editQueryDescription");
+
+    event.preventDefault();
+    $(this).parents().eq(0).find(".saveUserQueryButton").removeClass("hide");
+
+    $(this).parents().eq(1).find(".queryDescription").removeClass("inactive");
+    $(this).parents().eq(1).find(".queryDescription").addClass("active");
+
+    $(this).parents().eq(1).find(".queryDescription span").css("display","none");
+    $(this).parents().eq(1).find(".queryDescription input").css("display","block");
+
+    console.log("Current Value: " + $(this).parents().eq(1).find(".queryDescription input").val());
+
+});
+
+$(document).on('input', '.queryDescription input', function () {
+    console.log($(this).val());
+});
+
+// Save ALL QUERIES
+$(document).on('click', '.saveUserQueries', function ( event ) {
+    event.preventDefault();
+
+});
+
+// QUERY DESCRIPTION
+$(document).on('click', '.saveUserQueryButton', function ( event ) {
+    event.preventDefault();
+    $(this).addClass("hide");
+
+    $(this).parents().eq(1).find(".queryDescription").removeClass("active");
+    $(this).parents().eq(1).find(".queryDescription").addClass("inactive");
+
+    var updatedInputValue = $(this).parents().eq(1).find(".queryDescription input").val();
+    $(this).parents().eq(1).find(".queryDescription span small").html(updatedInputValue);
+    $(this).parents().eq(1).find(".queryDescription input").val(updatedInputValue);
+
+
+    $(this).parents().eq(1).find(".queryDescription span").css("display","inline");
+    $(this).parents().eq(1).find(".queryDescription input").css("display","none");
+
+});
+
+// Selection Dropdown
+$(document).on('change', '#savedUserQueries select', function ( event ) {
+
+    event.preventDefault();
+
+    // Check the option value selected
+    console.log("Table Rows Remaining: " + $("#savedUserQueries tbody tr").length + " | '" + $(this).parents().eq(1).attr('class') + "' Cell - Selection Option: " + $(this).val());
+
+    var mongoId = $("#mongoIdForCollection").html();
+    updateUserQueries(mongoId);
+});
+
+
 // Take the Table, update the search query array
 var updateUserQueries = function (old_mongodb_id) {
 
@@ -42,7 +100,7 @@ var updateUserQueries = function (old_mongodb_id) {
         var oneQuery = new Object();
         oneQuery.next_scheduled_run = $(this).find('.scheduledRunCell select :selected').text();
         oneQuery.email_notification = $(this).find('.emailNotifyCell select :selected').text();
-        oneQuery.query_description = $(this).find('.queryDescription').html();
+        oneQuery.query_description = $(this).find('.queryDescription span small').html();
         oneQuery.query_xml = $(this).find('td .submitRestButton').attr("alt");
         updatedUserQueriesArray.push(oneQuery);
     });
@@ -90,8 +148,8 @@ $(document).on('click', '#viewUserQueries', function () {
                 var newRow = "<tr>";
                 newRow += "<td class='scheduledRunCell'>" + selectDropdownWorker(["monthly","weekly","none"],object["next_scheduled_run"]) + "</td>";
                 newRow += "<td class='emailNotifyCell'>" + selectDropdownWorker(["true","false"],object["email_notification"]) + "</td>";
-                newRow += "<td class='queryDescription'>" + object["query_description"] + "</td>";
-                newRow += "<td><input class='btn btn-primary btn-sm submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'><button class='btn btn-danger btn-sm deleteUserOneQuery' type='submit'><span class='glyphicon glyphicon-trash'></span></button></td>";
+                newRow += "<td class='queryDescription editable-field inactive'><span><small>" + object["query_description"] + "</small></span><input class='form-control input-sm' type='text' style='display: none;' value='" + object["query_description"] + "'></td>";
+                newRow += "<td><input class='btn btn-primary btn-sm submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'><button class='btn btn-danger btn-sm deleteUserOneQuery' type='submit'><span class='glyphicon glyphicon-trash'></span></button><button class='btn btn-default btn-sm editQueryDescription' type='submit'><span class='glyphicon glyphicon-pencil'></span></button><button class='btn btn-success btn-sm saveUserQueryButton hide' type='submit'>SAVE</button></td>";
                 newRow += "</tr>";
 
                 $("#savedUserQueries > tbody:last-child").append(newRow);
@@ -104,6 +162,7 @@ $(document).on('click', '#viewUserQueries', function () {
 
     $("#viewUserQueries").hide();
     $("#saveUserQueries").show();
+
 });
 
 // Selection Dropdown

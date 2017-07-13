@@ -202,7 +202,7 @@ var updateDocumentsByMongoId = function (db, object, id, collection, callback) {
     var check = pattern.test(id);
     if (check) {
         console.log("This is valid hex [", id, "]");
-        my_collection.update({ '_id': new mdb.ObjectID(id) }, { $set: { 'search_queries': object.search_queries } }, function(err) {
+        my_collection.update({ '_id': new mdb.ObjectID(id) }, { $set: { 'search_queries': JSON.parse(object.search_queries) } }, function(err) {
             assert.equal(err, null);
             callback(!err)
         });

@@ -6,7 +6,9 @@ function clearUpXML(noncleanXML) {
 
         // For COMPOSITION QUERY - take out the version number
         noncleanXML = noncleanXML.replace(/<orgPdbCompositeQuery version="1.0">/g, '<orgPdbCompositeQuery>');
+        noncleanXML = noncleanXML.replace(/<version>[\s\S]*?<\/version>/g, '');
         noncleanXML = noncleanXML.replace(/<queryId>[\s\S]*?<\/queryId>/g, '');
+        noncleanXML = noncleanXML.replace(/<description>[\s\S]*?<\/description>/g, '');
         noncleanXML = noncleanXML.replace(/<resultCount>[\s\S]*?<\/resultCount>/g, '');
         noncleanXML = noncleanXML.replace(/<runtimeStart>[\s\S]*?<\/runtimeStart>/g, '');
         cleanedUpQueryXML = noncleanXML.replace(/<runtimeMilliseconds>[\s\S]*?<\/runtimeMilliseconds>/g, '');
@@ -55,6 +57,11 @@ $(document).on('click', '#saveQueryXML-Object', function () {
                 singleQuery.next_scheduled_run = $('input[name="next_scheduled_run"]:checked').val();
                 singleQuery.email_notification = $('input[name="email_notification"]:checked').val();
                 singleQuery.query_description = $('#searchQueryTitle').val();
+
+                var noncleanXML = $('#queryXML').val();
+                var cleanXML = clearUpXML(noncleanXML);
+                $('#queryXML').val(cleanXML);
+
                 singleQuery.query_xml = $('#queryXML').val();
 
                 searchQueryArray.push(singleQuery);

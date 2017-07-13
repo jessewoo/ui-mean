@@ -7,6 +7,9 @@ Using the Express NodeJS framework, authentication middleware Passport service, 
 - Start the node application `node app`
 - Go to http://localhost:3000/
 
+# Other Notes
+- Will go to http://jwdev.rcsb.org for the interstitial page
+
 ##### Tutorials
 * https://www.danielgynn.com/build-an-authentication-app-using-express-node-passport/
 * https://www.danielgynn.com/node-auth-part2/

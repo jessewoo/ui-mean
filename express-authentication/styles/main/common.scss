@@ -60,3 +60,7 @@ hr {
 .NEEDHELP {
     background-color: $need_help;
 }
+
+#savedUserQueries tr .active {
+    background-color: $not_done;
+}
