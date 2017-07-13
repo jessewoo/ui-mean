@@ -62,5 +62,11 @@ hr {
 }
 
 #savedUserQueries tr .active {
-    background-color: $not_done;
+    background-color: $background_for_content_darker;
+}
+
+#savedUserQueries tr .editQueryDescription {
+    position:absolute;
+    top: 5px;
+    right: 5px;
 }
