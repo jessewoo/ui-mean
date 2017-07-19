@@ -7,6 +7,7 @@ function clearUpXML(noncleanXML) {
         // For COMPOSITION QUERY - take out the version number
         noncleanXML = noncleanXML.replace(/<orgPdbCompositeQuery version="1.0">/g, '<orgPdbCompositeQuery>');
         noncleanXML = noncleanXML.replace(/<version>[\s\S]*?<\/version>/g, '');
+        noncleanXML = noncleanXML.replace(/<queryRefinementLevel>[\s\S]*?<\/queryRefinementLevel>/g, '');
         noncleanXML = noncleanXML.replace(/<queryId>[\s\S]*?<\/queryId>/g, '');
         noncleanXML = noncleanXML.replace(/<description>[\s\S]*?<\/description>/g, '');
         noncleanXML = noncleanXML.replace(/<resultCount>[\s\S]*?<\/resultCount>/g, '');

@@ -12,6 +12,117 @@ $(document).on('click', '.submitRestButton', function ( event ) {
     $('#submitForSearchResults').submit();
 });
 
+
+$(document).on('click', '.emailUserButton', function ( event ) {
+    event.preventDefault();
+    console.log("emailUserButton CLICKED");
+    var xmlText = $(this).attr("alt");
+    // console.log(xmlText);
+
+    var queryDescription = $(this).parents().eq(1).find(".queryDescription span small").html();
+
+    var finalXmlText;
+
+    // Figure out how to get the Tuesday from a month back, or a week back
+    var addTimeBoundConjunction = "<queryRefinement><conjunctionType>and</conjunctionType><orgPdbQuery><queryType>org.pdb.query.simple.ReleaseDateQuery</queryType><pdbx_audit_revision_history.revision_date.comparator>between</pdbx_audit_revision_history.revision_date.comparator><pdbx_audit_revision_history.revision_date.min>2017-07-01</pdbx_audit_revision_history.revision_date.min><pdbx_audit_revision_history.revision_date.max>2017-07-31</pdbx_audit_revision_history.revision_date.max><pdbx_audit_revision_history.ordinal.comparator>=</pdbx_audit_revision_history.ordinal.comparator><pdbx_audit_revision_history.ordinal.value>1</pdbx_audit_revision_history.ordinal.value></orgPdbQuery></queryRefinement></orgPdbCompositeQuery>";
+
+    if (xmlText.includes("orgPdbCompositeQuery")) {
+        finalXmlText = xmlText.replace(/<version>[\s\S]*?<\/version>/g, '');
+        finalXmlText = finalXmlText.replace(/<queryRefinementLevel>[\s\S]*?<\/queryRefinementLevel>/g, '');
+        finalXmlText = finalXmlText.replace("</orgPdbCompositeQuery>", "");
+        finalXmlText += addTimeBoundConjunction;
+    } else {
+        finalXmlText = "<orgPdbCompositeQuery>";
+        finalXmlText += "<queryRefinement>" + xmlText + "</queryRefinement>";
+        finalXmlText += addTimeBoundConjunction;
+    }
+
+    finalXmlText = encodeURIComponent(finalXmlText);
+
+    var structureDataArray = [];
+
+    $.ajax({
+        type: "POST",
+        url: "http://jwdev.rcsb.org/pdb/rest/search/",
+        data: finalXmlText,
+        success: function(data) {
+            if ((data === "") || (data === null)) {
+                console.log("No Data");
+            } else {
+                structureDataArray = data.trim().split("\n");
+                // console.log(structureDataArray);
+                emailStructureData(structureDataArray, queryDescription);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error, status = " + textStatus + ", " +
+                "error thrown: " + errorThrown
+            );
+        }
+    });
+});
+
+// Function Email
+
+// Because forEach accept only one callback.
+// Since there is asynchronous method inside forEach, need to check whether all asyn call completed
+function emailStructureData(structureDataArray, queryDescription) {
+    console.log("Email Structure Data Function");
+    console.log(structureDataArray);
+
+    var emailStructure = "";
+
+    $.each(structureDataArray, function (index) {
+        var pdbid = structureDataArray[index];
+        var structureDataArrayLength = structureDataArray.length;
+        $.ajax({
+            type: "GET",
+            url: "http://jwdev.rcsb.org/pdb/json/describePDB?structureId=" + pdbid,
+            data: {format: 'json'},
+            success: function(data) {
+                var dataParsed = JSON.parse(data);
+                var structureTitle = dataParsed[0]["title"];
+                emailStructure += "Structure ID: " + pdbid + " | Title: " + structureTitle + "\n";
+
+                if ((index + 1) === structureDataArrayLength) {
+                    // console.log(emailStructure);
+                    emailToUser(emailStructure, queryDescription);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("Error, status = " + textStatus + ", " +
+                    "error thrown: " + errorThrown
+                );
+            }
+        });
+    });
+}
+
+// Function Email
+function emailToUser(finalEmailStructure, queryDescription) {
+    console.log("Email to User");
+    console.log(finalEmailStructure);
+    console.log(queryDescription);
+
+    var preferred_email = $('#preferred_email_value').val();
+
+    $.ajax({
+        url: "/email/contact",
+        method: "POST",
+        data: { email: preferred_email, subject: queryDescription, message: finalEmailStructure },
+        success: function(response) {
+            console.log(response);
+            console.log("DONE POST");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error, status = " + textStatus + ", " +
+                "error thrown: " + errorThrown
+            );
+        }
+    });
+}
+
+
 $(document).on('click', '.deleteUserOneQuery', function ( event ) {
     event.preventDefault();
     $(this).parents().eq(1).remove();
@@ -118,7 +229,10 @@ $(document).on('change', '#savedUserQueries select', function ( event ) {
 // Take the Table, update the search query array
 var updateUserQueries = function (old_mongodb_id) {
     var user_email = $('#user_email').html();
+    var preferred_email = $('#preferred_email_value').val();
+
     console.log(old_mongodb_id);
+    console.log(preferred_email);
 
     var finalObject = new Object();
     var updatedUserQueriesArray = [];
@@ -133,6 +247,7 @@ var updateUserQueries = function (old_mongodb_id) {
     });
 
     finalObject.email = user_email;
+    finalObject.preferred_email = preferred_email;
 
     finalObject.search_queries = JSON.stringify(updatedUserQueriesArray);
     console.log(finalObject);
@@ -168,6 +283,7 @@ $(document).on('click', '#viewUserQueries', function () {
             console.log(data);
 
             $("#mongoIdForCollection").html(data[0]["_id"]);
+            $("#preferred_email_value").val(data[0]["preferred_email"]);
 
             // DATA - Loop thru each object
             $.each(data[0]["search_queries"], function (index, object) {
@@ -185,7 +301,8 @@ $(document).on('click', '#viewUserQueries', function () {
                     "<button class='btn btn-success btn-sm saveUserQueryButton hide' type='submit'>SAVE</button>"  +
                     "<button class='btn btn-default btn-sm cancelUserQueryButton hide' type='submit'>CANCEL</button>"  +
                     "</td>";
-                newRow += "<td class='col-xs-3'><input class='btn btn-primary btn-sm submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'><button class='btn btn-danger btn-sm deleteUserOneQuery' type='submit'><span class='glyphicon glyphicon-trash'></span></button></td>";
+                newRow += "<td class='col-xs-2'><input class='btn btn-primary btn-sm submitRestButton' type='submit' value='Search' alt='" + object["query_xml"].toString() + "'><button class='btn btn-danger btn-sm deleteUserOneQuery' type='submit'><span class='glyphicon glyphicon-trash'></span></button></td>";
+                newRow += "<td class='col-xs-1'><input class='btn btn-default btn-sm emailUserButton' type='submit' value='Email' alt='" + object["query_xml"].toString() + "'></td>";
                 newRow += "</tr>";
 
                 $("#savedUserQueries > tbody:last-child").append(newRow);

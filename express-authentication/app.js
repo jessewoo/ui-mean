@@ -8,12 +8,15 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var email = require('./routes/email');
 var searchquery = require('./routes/searchquery');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var flash = require('connect-flash');
+
+var nodemailer = require('nodemailer');
 
 // Session
 var session = require('express-session');
@@ -68,6 +71,7 @@ app.use(flash());
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/email', email);
 app.use('/searchquery', searchquery);
 
 

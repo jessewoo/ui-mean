@@ -189,6 +189,7 @@ var findDocumentsByEmail = function (db, email, collection, callback) {
 
 
 // Update one motm_articles (by mongo db id)
+// Will update the preferred email as well
 var updateDocumentsByMongoId = function (db, object, id, collection, callback) {
     console.log("Update document in the database ->", id);
     // console.log("Database ->", db);
@@ -202,7 +203,7 @@ var updateDocumentsByMongoId = function (db, object, id, collection, callback) {
     var check = pattern.test(id);
     if (check) {
         console.log("This is valid hex [", id, "]");
-        my_collection.update({ '_id': new mdb.ObjectID(id) }, { $set: { 'search_queries': JSON.parse(object.search_queries) } }, function(err) {
+        my_collection.update({ '_id': new mdb.ObjectID(id) }, { $set: { 'search_queries': JSON.parse(object.search_queries), 'preferred_email': object.preferred_email } }, function(err) {
             assert.equal(err, null);
             callback(!err)
         });
