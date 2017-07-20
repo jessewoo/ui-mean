@@ -214,6 +214,7 @@ $(document).on('click', '#saveUserQueries', function ( event ) {
 
     var mongoId = $("#mongoIdForCollection").html();
     updateUserQueries(mongoId);
+
 });
 
 // Selection Dropdown
@@ -273,9 +274,10 @@ $(document).on('click', '#viewUserQueries', function () {
     var user_email = $('#user_email').html();
     console.log(user_email);
 
+    // url: "/searchquery/one/queries/email/" + user_email
     $.ajax({
         type: "get",
-        url: "/searchquery/one/queries/email/" + user_email,
+        url: "/searchquery/one/queries/user/all",
         dataType: "json",
         contentType: "application/json",
         success: function (data) {

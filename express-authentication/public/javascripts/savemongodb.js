@@ -39,7 +39,7 @@ $(document).on('click', '#saveQueryXML-Object', function () {
 
         $.ajax({
             type: "get",
-            url: "/searchquery/one/queries/email/" + user_email,
+            url: "/searchquery/one/queries/user/all",
             dataType: "json",
             contentType: "application/json",
             success: function (data) {
@@ -81,11 +81,11 @@ $(document).on('click', '#saveQueryXML-Object', function () {
 
                     // Push into existing array of "search_queries"
                     $.each(data[0]["search_queries"], function (index, object) {
-                        console.log(object);
+                        // console.log(object);
                         searchQueryArray.push(object);
                     });
                     content.search_queries = searchQueryArray;
-                    console.log(content);
+                    // console.log(content);
                 }
 
                 // JSON construction
@@ -103,13 +103,13 @@ $(document).on('click', '#saveQueryXML-Object', function () {
                     contentType: "application/json",
                     success: function (data) {
                         console.log("Item saved to database!");
-                        // window.location.replace("/profile");
                         console.log(data);
+                        console.log("New ID:" + data.insertedIds[0]);
 
                         // DELETE THE ORIGINAL
                         var prep = {};
                         prep.id = old_id;
-                        console.log("prep", prep);
+                        // console.log("prep", prep);
                         var json2 = JSON.stringify(prep);
                         console.log('Requesting delete of ->', json2);
                         $.ajax({
@@ -120,7 +120,10 @@ $(document).on('click', '#saveQueryXML-Object', function () {
                             contentType: "application/json",
                             success: function(data2){
                                 console.log("Item removed from the database!");
-                                console.log(data2);
+                                // console.log(data2);
+
+                                // After Deleting
+                                // window.location.replace("/userqueries");
                             },
                             error: function(err2){
                                 console.log("ERROR: Unable remove the item from the database!", err2);
@@ -137,13 +140,6 @@ $(document).on('click', '#saveQueryXML-Object', function () {
                 console.log("ERROR: Unable to retrieve data!", err);
             }
         });
-
-        // Log (display to console) the result
-        var json = JSON.stringify(content);
-        console.log("Sending: " + json);
-
-        // After All the Posting
-        // window.location.replace("/userqueries");
 
     } else {
         console.error("No Email");

@@ -3,79 +3,84 @@
   <% include partials/head.ejs %>
   <body>
   <% include partials/navbar.ejs %>
-    <div class="col-sm-8 col-sm-offset-2">
-      <br/><br/><br/>
-      <div>
-        <h2>Saved JSON Search to MongoDB</h2>
-        <pre><%= user %></pre>
-        <br>
-        <div id="savedXMLtoMongoDB">
-          <div class="form-group">
-            <label>User Email</label>
-            <input type="text" class="form-control" name="email" id="userEmail" value="<%= user_email %>" disabled>
-          </div>
-          <div class="form-group">
-            <label>Search Query Title</label>
-            <input type="text" class="form-control" name="searchQueryTitle" id="searchQueryTitle">
-          </div>
-          <div class="form-group">
-            <label>Query XML</label>
-            <textarea class="form-control" name="query_XML" id="queryXML" rows="3"><%= xml_text %></textarea>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <br/><br/><br/>
+        <div>
+          <h2>Saved JSON Search to MongoDB</h2>
+          <pre><%= user %></pre>
+          <br>
+          <div id="savedXMLtoMongoDB">
+            <div class="form-group">
+              <label>User Email</label>
+              <input type="text" class="form-control" name="email" id="userEmail" value="<%= user_email %>" disabled>
+            </div>
+            <div class="form-group">
+              <label>Search Query Title</label>
+              <input type="text" class="form-control" name="searchQueryTitle" id="searchQueryTitle">
+            </div>
+            <div class="form-group">
+              <label>Query XML</label>
+              <textarea class="form-control" name="query_XML" id="queryXML" rows="3"><%= xml_text %></textarea>
+            </div>
 
-          <!-- Next Scheduled Run Option -->
-          <div class="row">
-            <div class="col-xs-6">
-              <p>Next Scheduled Run</p>
-              <div class="form-group">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="next_scheduled_run" value="monthly"> Monthly
-                  </label>
+            <!-- Next Scheduled Run Option -->
+            <div class="row">
+              <div class="col-xs-6">
+                <p>Next Scheduled Run</p>
+                <div class="form-group">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="next_scheduled_run" value="monthly"> Monthly
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="next_scheduled_run" value="weekly" checked> Weekly
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="next_scheduled_run" value="none"> None
+                    </label>
+                  </div>
                 </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="next_scheduled_run" value="weekly" checked> Weekly
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="next_scheduled_run" value="none"> None
-                  </label>
+              </div>
+              <div class="col-xs-6">
+                <!-- Email Notification Option -->
+                <p>Email Notification</p>
+                <div class="form-group">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="email_notification" value="true" checked> Yes
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="email_notification" value="false"> No
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-xs-6">
-              <!-- Email Notification Option -->
-              <p>Email Notification</p>
-              <div class="form-group">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="email_notification" value="true" checked> Yes
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="email_notification" value="false"> No
-                  </label>
-                </div>
-              </div>
+            <br/><br/>
+            <div>
+              <button class="btn-primary btn hide" id="saveQueryXML">Save - SINGLE ROW</button>
+              <button class="btn-success btn" id="saveQueryXML-Object">Save - ONE OBJECT</button>
+              <button class="btn-info btn" id="cleanXMLData">Clean XML Data</button>
+              <button class="btn-default btn" id="insertDummyData">Insert Dummy Data</button>
             </div>
-          </div>
-          <br/><br/>
-          <div>
-            <button class="btn-primary btn hide" id="saveQueryXML">Save - SINGLE ROW</button>
-            <button class="btn-success btn" id="saveQueryXML-Object">Save - ONE OBJECT</button>
-            <button class="btn-info btn" id="cleanXMLData">Clean XML Data</button>
-            <button class="btn-default btn" id="insertDummyData">Insert Dummy Data</button>
+
+
           </div>
 
 
         </div>
-
-
       </div>
     </div>
+  </div>
+
   </body>
 
 </html>

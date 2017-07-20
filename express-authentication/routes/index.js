@@ -1,6 +1,5 @@
 var express = require('express');
 var passport = require('passport');
-// var mailer = require('express-mailer');
 var bodyParser = require('body-parser');
 var router = express.Router();
 
@@ -15,6 +14,8 @@ router.get('/', function(req, res, next) {
         authenticate: req.isAuthenticated(), user: req.user
     });
     console.log(req.session.id);
+
+    // console.log("Configuration File:" + config.mailerLogin);
 });
 
 router.get('/login', function(req, res, next) {
@@ -234,3 +235,5 @@ function isLoggedIn_SavedXML(req, res, next) {
         return next();
     res.redirect('/');
 }
+
+// HOW DO EXPORT COMMON FUNCTIONS

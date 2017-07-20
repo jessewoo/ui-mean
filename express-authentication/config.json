@@ -5,6 +5,9 @@
   "fontawesomeCssUrl": "//cdn.rcsb.org/javascript/fontawesome/latest/css/font-awesome.min.css",
 
   "rcsbImageUrl": "//cdn.rcsb.org/rcsb-pdb/",
-  "legacyServer": "http://www.rcsb.org/"
+  "legacyServer": "http://www.rcsb.org/",
+
+  "mailerLogin": "testing.rcsb@gmail.com",
+  "mailerPassword": "testing123"
 
 }

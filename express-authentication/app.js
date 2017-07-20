@@ -38,6 +38,7 @@ config.environment = env;
 config.version = JSON.parse( fs.readFileSync( "./package.json" ) ).version;
 app.locals.config = config;
 
+console.log("From Configuration File:" + config.mailerLogin);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

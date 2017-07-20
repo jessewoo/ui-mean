@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var mdb = require('mongodb');
+var md5 = require('md5');
 
 // Config options
 var url = 'mongodb://localhost:27017/expressauth';
@@ -93,7 +94,6 @@ var readQueriesWrapper = function (email, collection, callback) {
     });
 };
 
-
 var updateQueriesWrapper = function (object, mongo_id, collection, callback) {
     MongoClient.connect(url, function (err, db) {
         console.log("++++++++++++ UPDATE QUERIES WRAPPER: +1 DB connection ++++++++++++++");
@@ -148,9 +148,9 @@ var findDocuments = function (db, object, callback) {
 var findOneDocument = function (db, id, collection, callback) {
     console.log("Finding documenet in the database ->", id);
 
-    console.log("Database ->", db);
-    console.log("Collecton ->", collection);
-    console.log("Callback ->", callback);
+    // console.log("Database ->", db);
+    // console.log("Collecton ->", collection);
+    // console.log("Callback ->", callback);
 
     var my_collection = db.collection(collection);
     // Verify passed mongo db id is valid hex
@@ -160,7 +160,8 @@ var findOneDocument = function (db, id, collection, callback) {
         console.log("This is valid hex [", id, "]");
         my_collection.find({_id: new mdb.ObjectID(id)}).toArray(function (err, docArray) {
             assert.equal(err, null);
-            //console.log("docArray", docArray);
+            console.log("docArray", docArray);
+            console.log("password", docArray[0]["local"]["password"]);
             callback(docArray[0])
         });
     } else {

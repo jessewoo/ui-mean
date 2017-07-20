@@ -1,5 +1,8 @@
 var express = require('express');
+var passport = require('passport');
+
 var router = express.Router();
+
 // Mongo Database related
 var database = require('../models/searchquery.js');
 
@@ -27,6 +30,33 @@ router.get('/one/:collection/:id', function (req, res) {
 router.get('/one/:collection/email/:email', function (req, res) {
     returnQueries(req.params.email, req.params.collection, res);
 });
+
+// Return queries based on Passport details - DON'T WANT URL INJECTION, HACKERS
+router.get('/one/:collection/user/all', function (req, res) {
+    if ((req.isAuthenticated()) === true ) {
+        console.log("**** User Login  ****");
+
+        // Use email to find search queries
+        var user_email = "";
+        if (req.user) {
+            if (req.user.local["email"] !== undefined ) {
+                user_email = req.user.local["email"];
+            } else if(req.user.google["email"] !== undefined) {
+                user_email = req.user.google["email"];
+            }
+
+            console.log(user_email);
+            returnQueries(user_email, req.params.collection, res);
+        } else {
+            console.log("No User");
+        }
+    } else {
+        console.log("**** User Need to Login - GET /Login  ****");
+        res.redirect('/login');
+    }
+
+});
+
 
 // UPDATE OBJECT
 router.post('/one/:collection/update/:id', function (req, res) {
