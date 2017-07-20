@@ -8,7 +8,9 @@ var userSchema = mongoose.Schema({
     local: {
         name: String,
         email: String,
-        password: String
+        password: String,
+        resetPasswordToken: String,
+        resetPasswordExpires: Date
     },
     google: {
         id: String,

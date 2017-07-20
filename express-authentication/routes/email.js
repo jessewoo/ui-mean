@@ -8,18 +8,19 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/trial', function(req, res) {
+    const config = req.app.locals.config;
 
     // Create the Nodemailer
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'testing.rcsb@gmail.com',
-            pass: 'testing123'
+            user: config.mailerLogin,
+            pass: config.mailerPassword
         }
     });
 
     var mailOptions = {
-        from: 'testing.rcsb@gmail.com',
+        from: config.mailerLogin,
         to: 'jesse.woo@rcsb.org',
         subject: 'Sending Email using Node.js',
         html: '<h1>Welcome</h1><p>That was easy!</p>'
@@ -32,12 +33,14 @@ router.get('/trial', function(req, res) {
         } else {
             console.log("++++++++++ EMAIL SENT +++++++++");
             console.log('Email sent: ' + info.response);
+            res.send('Email Sent!');
         }
     });
 });
 
 
 router.post('/contact', function(req, res) {
+    const config = req.app.locals.config;
 
     console.log(req.body);
     var data = {
@@ -50,13 +53,13 @@ router.post('/contact', function(req, res) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'testing.rcsb@gmail.com',
-            pass: 'testing123'
+            user: config.mailerLogin,
+            pass: config.mailerPassword
         }
     });
 
     var mailOptions = {
-        from: 'testing.rcsb@gmail.com',
+        from: config.mailerLogin,
         to: data.email,
         subject: data.subject,
         html: '<h1>User Query</h1><p>' + data.message + '</p>'

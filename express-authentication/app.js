@@ -13,8 +13,13 @@ var searchquery = require('./routes/searchquery');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
 var mongoose = require('mongoose');
-var flash = require('connect-flash');
+// var flash = require('connect-flash');
+var flash = require('express-flash');
+
+var async = require('async');
+var crypto = require('crypto');
 
 var nodemailer = require('nodemailer');
 
@@ -37,6 +42,10 @@ const config = JSON.parse( fs.readFileSync( process.env.CONFIG || "./config.json
 config.environment = env;
 config.version = JSON.parse( fs.readFileSync( "./package.json" ) ).version;
 app.locals.config = config;
+
+// General settings that are used throughout the app, mainly in routes, templates or in client-side JavaScript.
+// - `config.json` and `devConfig.json` files
+// - available in app instance `req.app.locals.config`
 
 console.log("From Configuration File:" + config.mailerLogin);
 

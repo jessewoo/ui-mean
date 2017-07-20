@@ -39,7 +39,8 @@ module.exports = function(passport) {
                     }
                 });
             });
-        }));
+        })
+    );
 
     passport.use('local-login', new LocalStrategy({
             usernameField: 'email',
@@ -56,7 +57,8 @@ module.exports = function(passport) {
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
                 return done(null, user);
             });
-        }));
+        })
+    );
 
     passport.use(new GoogleStrategy({
             clientID: configAuth.googleAuth.clientID,
@@ -84,6 +86,7 @@ module.exports = function(passport) {
                     }
                 });
             });
-        }));
+        })
+    );
 
 };

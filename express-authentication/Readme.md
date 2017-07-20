@@ -13,3 +13,4 @@ Using the Express NodeJS framework, authentication middleware Passport service, 
 ##### Tutorials
 * https://www.danielgynn.com/build-an-authentication-app-using-express-node-passport/
 * https://www.danielgynn.com/node-auth-part2/
+* http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/

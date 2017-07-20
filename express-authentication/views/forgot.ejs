@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<% include partials/head.ejs %>
+	<body>
+		<% include partials/navbar.ejs %>
+		<div class="col-sm-8 col-sm-offset-2">
+			<br/><br/><br/><br/>
+			<% if ((message != null) || (message !== undefined)) { %>
+				<div class="alert-danger"><%= message %></div>
+			<% } %>
+
+			<div class="text-center">
+				<h1>Forgot Your Password</h1>
+				<form action="/forgot" method="post">
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="text" class="form-control" name="email">
+					</div>
+					<button type="submit" class="form-control btn btn-primary">Reset Password</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
+
+<!--http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/-->
