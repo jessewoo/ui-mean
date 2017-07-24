@@ -306,6 +306,7 @@ router.post('/forgot', function(req, res, next) {
                     console.log("++++++++++ EMAIL SENT +++++++++");
                     console.log('Email sent: ' + info.response);
                 }
+                req.flash('forgotMessage', 'An e-mail has been sent to ' + req.body.email  + ' with further instructions.');
                 done(err, 'done');
             });
         }
@@ -319,15 +320,94 @@ router.post('/forgot', function(req, res, next) {
     });
 });
 
+
 router.get('/reset/:token', function(req, res) {
-    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    console.log("RESET " + req.params.token);
+    User.findOne({ 'local.resetPasswordToken': req.params.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function(err, user) {
         if (!user) {
-            req.flash('error', 'Password reset token is invalid or has expired.');
+            req.flash('forgotMessage', 'Password reset token is invalid or has expired.');
             return res.redirect('/forgot');
         }
         res.render('reset', {
-            user: req.user
+            user: req.user,
+            token: req.params.token,
+            message: req.flash('resetMessage')
         });
+
+        console.log(user);
+    });
+});
+
+
+router.post('/reset/:token', function(req, res, next) {
+
+    const config = req.app.locals.config;
+    console.log(req.body);
+
+    async.waterfall([
+        function(done) {
+            User.findOne({ 'local.resetPasswordToken': req.params.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function(err, user) {
+                if (!user) {
+                    req.flash('resetMessage', 'Password reset token is invalid or has expired.');
+                    return res.redirect('back');
+                }
+
+                // In a real-world scenario you would compare req.body.confirm with req.body.password to see if they are equal.
+
+                console.log("COMPARING PASSWORD");
+                console.log(user.comparePassword(req.body.password, req.body.confirm));
+
+                console.log("Email FIND ONE: " + user.local.email);
+
+                // Need to
+                user.local.password = user.generateHash(req.body.password);
+                user.local.resetPasswordToken = undefined;
+                user.local.resetPasswordExpires = undefined;
+
+                user.save(function(err) {
+                    req.logIn(user, function(err) {
+                        done(err, user);
+                    });
+                });
+            });
+        },
+        function(user, done) {
+            console.log(user);
+
+            // Create the Nodemailer
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: config.mailerLogin,
+                    pass: config.mailerPassword
+                }
+            });
+            var mailOptions = {
+                to: 'jesse.woo@rcsb.org',
+                from: config.mailerLogin,
+                subject: 'Your password has been changed',
+                text: 'Hello,\n\n' +
+                    'This is a confirmation that the password for your account ' + user.local.email + "\n\n"
+            };
+
+            transporter.sendMail(mailOptions, function(err,info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("++++++++++ EMAIL SENT +++++++++");
+                    console.log('Email sent: ' + info.response);
+                }
+                req.flash('resetMessage', 'Success! Your password has been changed');
+                done(err, 'done');
+            });
+        }
+    ], function(err) {
+        if (err) {
+            console.log("ERROR with ASYNC WATERFALL");
+            return next(err);
+        }
+        // END WITH RESPONSE
+        res.redirect('/');
     });
 });
 

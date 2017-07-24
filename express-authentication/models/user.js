@@ -26,4 +26,14 @@ userSchema.methods.generateHash = function(password) {
 userSchema.methods.validPassword = function(password) {
     return this.local.password === md5(password);
 };
+
+userSchema.methods.comparePassword = function(candidatePassword, confirmPassword) {
+    if (candidatePassword === confirmPassword) {
+       return "++++++++ MATCHING ++++++++++";
+    } else {
+       return "+++++++ NOT MATCHING ++++++++++"
+    }
+};
+
+
 module.exports = mongoose.model('User', userSchema);  

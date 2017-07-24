@@ -5,8 +5,10 @@
 		<% include partials/navbar.ejs %>
 		<div class="col-sm-8 col-sm-offset-2">
 			<br/><br/><br/><br/>
-			<% if ((message != null) || (message !== undefined)) { %>
-				<div class="alert-danger"><%= message %></div>
+			<% if ((message != null) || (message !== undefined) || (message !== "") || (message.length > 0)) { %>
+				<div class="alert-danger">
+					<%= message %>
+				</div>
 			<% } %>
 
 			<div class="text-center">

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<% include partials/head.ejs %>
+	<body>
+		<% include partials/navbar.ejs %>
+		<div class="col-sm-8 col-sm-offset-2">
+			<br/><br/><br/><br/>
+			<% if ((message != null) || (message !== undefined) || (message !== "") || (message.length > 0)) { %>
+			<div class="alert-danger">
+				<%= message %>
+			</div>
+			<% } %>
+
+			<div class="text-center">
+				<h1>Reset Password</h1>
+				<form action="/reset/<%= token %>" method="post">
+					<div class="form-group">
+						<label for="password">New Password</label>
+						<input type="password" class="form-control" name="password" value="" placeholder="New Password" autofocus="true">
+					</div>
+					<div class="form-group">
+						<label for="confirm">Confirm Password</label>
+						<input type="password" class="form-control" name="confirm" value="" placeholder="Confirm Password" autofocus="true">
+					</div>
+					<button type="submit" class="form-control btn btn-primary">Update Password</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
+
+<!--http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/-->
