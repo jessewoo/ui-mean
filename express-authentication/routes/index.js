@@ -188,8 +188,8 @@ router.get('/signup', function(req, res) {
 
 router.get('/profile', isLoggedIn, function(req, res) {
     console.log("Set the Cookie");
-
     console.log(req.user._id);
+
 
     var userid;
     if (req.user.local.email) {
@@ -199,8 +199,27 @@ router.get('/profile', isLoggedIn, function(req, res) {
         userid = req.user.google.email;
     }
 
-    res.cookie('LoggedIn_UserId', userid, { maxAge: 900000, httpOnly: true });
+    console.log("Domain is set .rcsb.org");
+
+    // https://stackoverflow.com/questions/7834228/set-cookie-for-domain-instead-of-subdomain-using-nodejs-and-expressjs
+    // https://stackoverflow.com/questions/18492576/share-cookie-between-subdomain-and-domain/23086139#23086139
+    res.cookie('LoggedIn_UserId', userid, { maxAge: 900000, httpOnly: true, domain: '.rcsb.org' });
     res.render('profile.ejs', { title: 'Profile Page', user: req.user });
+
+//    http://jesse.rcsb.org:3000/
+
+// https://stackoverflow.com/questions/263010/whats-your-favorite-cross-domain-cookie-sharing-approach
+// https://ponyfoo.com/articles/json-web-tokens-vs-session-cookies
+
+//  https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+//  http://mherman.org/blog/2016/10/28/token-based-authentication-with-node/#.WXZyx9PyvUI
+//  https://www.codementor.io/olatundegaruba/5-steps-to-authenticating-node-js-with-jwt-7ahb5dmyr
+
+//  https://stackoverflow.com/questions/16209145/how-to-set-cookie-in-node-js-using-express-framework
+//  https://stackoverflow.com/questions/10997715/how-to-check-if-a-cookie-exists-even-if-it-was-created-in-another-application
+
+// https://stackoverflow.com/questions/32354962/is-it-possible-to-share-cookies-between-subdomains
+
 });
 
 router.get('/logout', function(req, res) {
